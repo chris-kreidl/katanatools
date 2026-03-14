@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 export const listVariantsSchema = z.object({
-  ids: z.number().array().optional(),
-  product_id: z.number().optional(),
-  material_id: z.number().optional(),
+  ids: z.array(z.number().int().positive()).optional(),
+  product_id: z.number().int().positive().optional(),
+  material_id: z.number().int().positive().optional(),
   sku: z.array(z.string().min(1)).optional(),
   sales_price: z.number().optional(),
   purchase_price: z.number().optional(),
@@ -23,7 +23,7 @@ export const listVariantsSchema = z.object({
 export type listVariantsSchemaType = z.infer<typeof listVariantsSchema>;
 
 export const getVariantSchema = z.object({
-  id: z.number().int(),
+  id: z.number().int().positive(),
   extend: z.array(z.enum(["product_or_material"])).optional(),
 });
 export type getVariantSchemaType = z.infer<typeof getVariantSchema>;
