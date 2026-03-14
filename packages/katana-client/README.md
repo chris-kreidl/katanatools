@@ -31,10 +31,10 @@ for await (const page of client.paginate(client.listProducts, {})) {
 
 ## Configuration
 
-| Option | Environment Variable | Description | Default |
-| --- | --- | --- | --- |
-| `apiKey` | `KATANA_API_KEY` | API bearer token | — |
-| `requestsPerSecond` | `KATANA_REQUESTS_PER_SECOND` | Rate limit (requests/sec) | `1` |
+| Option              | Environment Variable         | Description               | Default |
+| ------------------- | ---------------------------- | ------------------------- | ------- |
+| `apiKey`            | `KATANA_API_KEY`             | API bearer token          | —       |
+| `requestsPerSecond` | `KATANA_REQUESTS_PER_SECOND` | Rate limit (requests/sec) | `1`     |
 
 Constructor options take precedence over environment variables.
 
