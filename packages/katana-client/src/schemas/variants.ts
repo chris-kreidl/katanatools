@@ -23,7 +23,7 @@ export const listVariantsSchema = z.object({
 export type listVariantsSchemaType = z.infer<typeof listVariantsSchema>;
 
 export const getVariantSchema = z.object({
-  id: z.number().int(),
+  id: z.number().int().positive(),
   extend: z.array(z.enum(["product_or_material"])).optional(),
 });
 export type getVariantSchemaType = z.infer<typeof getVariantSchema>;
