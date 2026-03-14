@@ -127,6 +127,8 @@ export interface KatanaListProductsResponse {
   data: Array<KatanaProduct>;
 }
 
+export type KatanaCreateProductResponse = KatanaProduct;
+
 export interface KatanaMaterial {
   id: number;
   name?: string;

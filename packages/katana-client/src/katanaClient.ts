@@ -3,6 +3,9 @@ import pThrottle from "p-throttle";
 import type {
   listManufacturingOrdersSchemaType,
   createManufacturingOrderSchemaType,
+  createProductSchemaType,
+  getProductSchemaType,
+  updateProductSchemaType,
   listMaterialsSchemaType,
   listProductsSchemaType,
   listSalesOrdersSchemaType,
@@ -23,6 +26,8 @@ import type {
 import type {
   KatanaListManufacturingOrdersResponse,
   KatanaCreateManufacturingOrderResponse,
+  KatanaCreateProductResponse,
+  KatanaProduct,
   KatanaListMaterialsResponse,
   KatanaListProductsResponse,
   KatanaListPurchaseOrdersResponse,
@@ -248,6 +253,27 @@ export class KatanaClient {
       updated_at_max: "string",
     });
     return this.request<KatanaListProductsResponse>("GET", "products", {}, queryParams);
+  }
+
+  async getProduct(params: getProductSchemaType): Promise<KatanaProduct> {
+    const { id, ...rest } = params;
+    const queryParams = buildQueryParams(rest, {
+      extend: "strArray",
+    });
+    return this.request<KatanaProduct>("GET", `products/${id}`, {}, queryParams);
+  }
+
+  async createProduct(payload: createProductSchemaType): Promise<KatanaCreateProductResponse> {
+    return this.request<KatanaCreateProductResponse>("POST", "products", {
+      body: JSON.stringify(payload),
+    });
+  }
+
+  async updateProduct(payload: updateProductSchemaType): Promise<KatanaProduct> {
+    const { id, ...body } = payload;
+    return this.request<KatanaProduct>("PATCH", `products/${id}`, {
+      body: JSON.stringify(body),
+    });
   }
 
   async listMaterials(params: listMaterialsSchemaType): Promise<KatanaListMaterialsResponse> {

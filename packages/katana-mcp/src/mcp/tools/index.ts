@@ -1,6 +1,8 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { KatanaClient } from "@ckreidl/katana-client";
 import { registerProductTools } from "./products";
+import { registerProductCreateTool } from "./productsCreate";
+import { registerProductUpdateTool } from "./productsUpdate";
 import { registerMaterialTools } from "./materials";
 import { registerManufacturingOrderTools } from "./manufacturingOrders";
 import { registerManufacturingOrderCreateTool } from "./manufacturingOrdersCreate";
@@ -20,6 +22,8 @@ import { registerVariantUpdateTool } from "./variantsUpdate";
 
 export function registerTools(server: McpServer, katanaClient: KatanaClient) {
   registerProductTools(server, katanaClient);
+  registerProductCreateTool(server, katanaClient);
+  registerProductUpdateTool(server, katanaClient);
   registerMaterialTools(server, katanaClient);
   registerManufacturingOrderTools(server, katanaClient);
   registerManufacturingOrderCreateTool(server, katanaClient);
