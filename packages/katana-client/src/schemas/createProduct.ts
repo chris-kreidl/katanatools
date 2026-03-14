@@ -58,7 +58,7 @@ const updateConfigSchema = z.object({
 
 export const updateProductSchema = z
   .object({
-    id: z.number().int(),
+    id: z.number().int().positive(),
     name: z.string().optional(),
     uom: z.string().max(7).optional(),
     category_name: z.string().optional(),

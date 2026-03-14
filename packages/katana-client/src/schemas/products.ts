@@ -27,7 +27,7 @@ export const listProductsSchema = z.object({
 export type listProductsSchemaType = z.infer<typeof listProductsSchema>;
 
 export const getProductSchema = z.object({
-  id: z.number().int(),
+  id: z.number().int().positive(),
   extend: z.array(z.enum(["supplier"])).optional(),
 });
 export type getProductSchemaType = z.infer<typeof getProductSchema>;
