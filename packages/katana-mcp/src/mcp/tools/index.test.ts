@@ -30,6 +30,7 @@ describe("registerTools", () => {
         "getProduct",
         "getVariant",
         "listVariants",
+        "updateProduct",
         "updateVariant",
         "listBomRows",
         "listInventory",

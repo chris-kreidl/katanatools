@@ -49,3 +49,32 @@ export const createProductSchema = z.object({
 });
 
 export type createProductSchemaType = z.infer<typeof createProductSchema>;
+
+const updateConfigSchema = z.object({
+  id: z.number().int().optional(),
+  name: z.string(),
+  values: z.array(z.string()),
+});
+
+export const updateProductSchema = z.object({
+  id: z.number().int(),
+  name: z.string().optional(),
+  uom: z.string().max(7).optional(),
+  category_name: z.string().optional(),
+  is_sellable: z.boolean().optional(),
+  is_producible: z.boolean().optional(),
+  is_purchasable: z.boolean().optional(),
+  is_auto_assembly: z.boolean().optional(),
+  is_archived: z.boolean().optional(),
+  default_supplier_id: z.number().int().max(2147483647).optional(),
+  additional_info: z.string().optional(),
+  batch_tracked: z.boolean().optional(),
+  serial_tracked: z.boolean().optional(),
+  operations_in_sequence: z.boolean().optional(),
+  purchase_uom: z.string().max(7).optional(),
+  purchase_uom_conversion_rate: z.number().max(1000000000000).optional(),
+  configs: z.array(updateConfigSchema).min(1).optional(),
+  custom_field_collection_id: z.number().int().max(2147483647).nullable().optional(),
+});
+
+export type updateProductSchemaType = z.infer<typeof updateProductSchema>;

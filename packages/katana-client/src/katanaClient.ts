@@ -5,6 +5,7 @@ import type {
   createManufacturingOrderSchemaType,
   createProductSchemaType,
   getProductSchemaType,
+  updateProductSchemaType,
   listMaterialsSchemaType,
   listProductsSchemaType,
   listSalesOrdersSchemaType,
@@ -265,6 +266,13 @@ export class KatanaClient {
   async createProduct(payload: createProductSchemaType): Promise<KatanaCreateProductResponse> {
     return this.request<KatanaCreateProductResponse>("POST", "products", {
       body: JSON.stringify(payload),
+    });
+  }
+
+  async updateProduct(payload: updateProductSchemaType): Promise<KatanaProduct> {
+    const { id, ...body } = payload;
+    return this.request<KatanaProduct>("PATCH", `products/${id}`, {
+      body: JSON.stringify(body),
     });
   }
 
