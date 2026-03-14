@@ -3,4 +3,4 @@
 "@ckreidl/katana-mcp": minor
 ---
 
-Add createProduct, getProduct, and updateProduct endpoints
+# Add createProduct, getProduct, and updateProduct endpoints
