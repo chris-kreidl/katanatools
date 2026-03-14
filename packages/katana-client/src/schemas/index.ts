@@ -1,5 +1,7 @@
-export { listProductsSchema } from "./products";
-export type { listProductsSchemaType } from "./products";
+export { listProductsSchema, getProductSchema } from "./products";
+export type { listProductsSchemaType, getProductSchemaType } from "./products";
+export { createProductSchema } from "./createProduct";
+export type { createProductSchemaType } from "./createProduct";
 export { listMaterialsSchema } from "./materials";
 export type { listMaterialsSchemaType } from "./materials";
 export { listManufacturingOrdersSchema } from "./manufacturingOrders";

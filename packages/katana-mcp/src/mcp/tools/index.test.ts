@@ -24,8 +24,10 @@ describe("registerTools", () => {
     expect(names).toEqual(
       [
         "createManufacturingOrder",
+        "createProduct",
         "createVariant",
         "getDemandForecasts",
+        "getProduct",
         "getVariant",
         "listVariants",
         "updateVariant",
