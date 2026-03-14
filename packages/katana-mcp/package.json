@@ -1,0 +1,36 @@
+{
+  "name": "@ckreidl/katana-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for interacting with the Katana MRP API",
+  "type": "module",
+  "bin": {
+    "ckreidl-katana-mcp": "./build/index.js"
+  },
+  "files": ["build"],
+  "scripts": {
+    "build": "rolldown -c",
+    "lint": "oxlint",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.3"
+  },
+  "devDependencies": {
+    "@ckreidl/katana-client": "workspace:*",
+    "rolldown": "^1.0.0-rc.0",
+    "vitest": "^4.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chris-kreidl/katanatools",
+    "directory": "packages/katana-mcp"
+  },
+  "keywords": ["katana", "mrp", "mcp", "model-context-protocol", "manufacturing"]
+}

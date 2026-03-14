@@ -1,0 +1,45 @@
+{
+  "name": "@ckreidl/katana-client",
+  "version": "0.1.0",
+  "description": "TypeScript client for the Katana MRP API",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "rolldown -c && tsc -p tsconfig.build.json",
+    "lint": "oxlint",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "ofetch": "^1.5.1",
+    "p-throttle": "^6.1.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "rolldown": "^1.0.0-rc.0",
+    "vitest": "^4.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chris-kreidl/katanatools",
+    "directory": "packages/katana-client"
+  },
+  "keywords": ["katana", "mrp", "api", "client", "manufacturing"]
+}

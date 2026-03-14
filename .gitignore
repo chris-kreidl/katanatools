@@ -1,0 +1,9 @@
+node_modules/
+build/
+out/
+dist/
+*.js.map
+.DS_Store
+*.tgz
+.env
+.env.*

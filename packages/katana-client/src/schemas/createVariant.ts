@@ -1,0 +1,33 @@
+import { z } from "zod";
+
+const configAttributeSchema = z.object({
+  config_name: z.string(),
+  config_value: z.string(),
+});
+
+const customFieldSchema = z.object({
+  field_name: z.string().max(40),
+  field_value: z.string().max(100),
+});
+
+export const createVariantSchema = z.object({
+  sku: z.string().optional(),
+  sales_price: z.number().min(0).max(100000000000).nullable().optional(),
+  purchase_price: z.number().min(0).max(100000000000).nullable().optional(),
+  product_id: z.number().int().max(2147483647).optional(),
+  material_id: z.number().int().max(2147483647).optional(),
+  supplier_item_codes: z.array(z.string().min(1)).min(1).optional(),
+  internal_barcode: z.string().min(3).max(40).optional(),
+  registered_barcode: z.string().max(120).optional(),
+  lead_time: z.number().int().max(999).nullable().optional(),
+  minimum_order_quantity: z.number().min(0).max(999999999).nullable().optional(),
+  config_attributes: z.array(configAttributeSchema).min(1).optional(),
+  custom_fields: z.array(customFieldSchema).max(3).optional(),
+});
+
+export type createVariantSchemaType = z.infer<typeof createVariantSchema>;
+
+export const updateVariantSchema = createVariantSchema.extend({
+  id: z.number().int(),
+});
+export type updateVariantSchemaType = z.infer<typeof updateVariantSchema>;
