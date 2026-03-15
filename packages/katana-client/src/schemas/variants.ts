@@ -47,7 +47,7 @@ const variantFieldsSchema = z.object({
   supplier_item_codes: z.array(z.string().min(1)).min(1).optional(),
   internal_barcode: z.string().min(3).max(40).optional(),
   registered_barcode: z.string().max(120).optional(),
-  lead_time: z.number().int().max(999).nullable().optional(),
+  lead_time: z.number().int().min(0).max(999).nullable().optional(),
   minimum_order_quantity: z.number().min(0).max(999999999).nullable().optional(),
   config_attributes: z.array(configAttributeSchema).min(1).optional(),
   custom_fields: z.array(customFieldSchema).max(3).optional(),
