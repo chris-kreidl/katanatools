@@ -1,6 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import {
   listManufacturingOrdersSchema,
+  getManufacturingOrderSchema,
   createManufacturingOrderSchema,
 } from "@ckreidl/katana-client";
 import type { KatanaClient } from "@ckreidl/katana-client";
@@ -20,6 +21,23 @@ export function registerManufacturingOrderTools(server: McpServer, katanaClient:
         };
       } catch (error) {
         return formatMcpError("retrieving manufacturing orders", error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "getManufacturingOrder",
+    {
+      inputSchema: getManufacturingOrderSchema,
+    },
+    async (params) => {
+      try {
+        const response = await katanaClient.getManufacturingOrder(params);
+        return {
+          content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
+        };
+      } catch (error) {
+        return formatMcpError("retrieving manufacturing order", error);
       }
     },
   );

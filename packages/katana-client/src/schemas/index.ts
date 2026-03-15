@@ -24,10 +24,12 @@ export type {
 } from "./variants";
 export {
   listManufacturingOrdersSchema,
+  getManufacturingOrderSchema,
   createManufacturingOrderSchema,
 } from "./manufacturingOrders";
 export type {
   listManufacturingOrdersSchemaType,
+  getManufacturingOrderSchemaType,
   createManufacturingOrderSchemaType,
 } from "./manufacturingOrders";
 export { listPurchaseOrdersSchema, createPurchaseOrderSchema } from "./purchaseOrders";

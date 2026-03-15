@@ -16,6 +16,11 @@ export const listManufacturingOrdersSchema = z.object({
 });
 export type listManufacturingOrdersSchemaType = z.infer<typeof listManufacturingOrdersSchema>;
 
+export const getManufacturingOrderSchema = z.object({
+  id: z.number().int().positive(),
+});
+export type getManufacturingOrderSchemaType = z.infer<typeof getManufacturingOrderSchema>;
+
 const batchTransactionSchema = z.object({
   quantity: z.number().min(0).optional(),
   batch_id: z.number().int().positive().optional(),

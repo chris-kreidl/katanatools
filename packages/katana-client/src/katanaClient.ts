@@ -3,6 +3,7 @@ import pThrottle from "p-throttle";
 import type {
   listManufacturingOrdersSchemaType,
   createManufacturingOrderSchemaType,
+  getManufacturingOrderSchemaType,
   createProductSchemaType,
   getProductSchemaType,
   updateProductSchemaType,
@@ -25,6 +26,7 @@ import type {
 } from "./schemas";
 import type {
   KatanaListManufacturingOrdersResponse,
+  KatanaManufacturingOrder,
   KatanaCreateManufacturingOrderResponse,
   KatanaCreateProductResponse,
   KatanaProduct,
@@ -330,6 +332,13 @@ export class KatanaClient {
     return this.request<KatanaCreateManufacturingOrderResponse>("POST", "manufacturing_orders", {
       body: JSON.stringify(payload),
     });
+  }
+
+  async getManufacturingOrder(
+    params: getManufacturingOrderSchemaType,
+  ): Promise<KatanaManufacturingOrder> {
+    const { id } = params;
+    return this.request<KatanaManufacturingOrder>("GET", `manufacturing_orders/${id}`);
   }
 
   async listSuppliers(params: listSuppliersSchemaType): Promise<KatanaListSuppliersResponse> {
