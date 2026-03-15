@@ -38,7 +38,7 @@ const customFieldSchema = z.object({
   field_value: z.string().max(100),
 });
 
-export const createVariantSchema = z.object({
+const variantFieldsSchema = z.object({
   sku: z.string().optional(),
   sales_price: z.number().min(0).max(100000000000).nullable().optional(),
   purchase_price: z.number().min(0).max(100000000000).nullable().optional(),
@@ -52,9 +52,14 @@ export const createVariantSchema = z.object({
   config_attributes: z.array(configAttributeSchema).min(1).optional(),
   custom_fields: z.array(customFieldSchema).max(3).optional(),
 });
+
+export const createVariantSchema = variantFieldsSchema.refine(
+  (data) => data.product_id !== undefined || data.material_id !== undefined,
+  { message: "One of product_id or material_id is required" },
+);
 export type createVariantSchemaType = z.infer<typeof createVariantSchema>;
 
-export const updateVariantSchema = createVariantSchema
+export const updateVariantSchema = variantFieldsSchema
   .extend({
     id: z.number().int().positive(),
   })
