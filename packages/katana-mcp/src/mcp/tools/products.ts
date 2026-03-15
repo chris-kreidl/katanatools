@@ -1,5 +1,10 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { listProductsSchema, getProductSchema } from "@ckreidl/katana-client";
+import {
+  listProductsSchema,
+  getProductSchema,
+  createProductSchema,
+  updateProductSchema,
+} from "@ckreidl/katana-client";
 import type { KatanaClient } from "@ckreidl/katana-client";
 import { formatMcpError } from "./errorUtils";
 
@@ -34,6 +39,40 @@ export function registerProductTools(server: McpServer, katanaClient: KatanaClie
         };
       } catch (error) {
         return formatMcpError("retrieving product", error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "createProduct",
+    {
+      inputSchema: createProductSchema,
+    },
+    async (params) => {
+      try {
+        const response = await katanaClient.createProduct(params);
+        return {
+          content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
+        };
+      } catch (error) {
+        return formatMcpError("creating product", error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "updateProduct",
+    {
+      inputSchema: updateProductSchema,
+    },
+    async (params) => {
+      try {
+        const response = await katanaClient.updateProduct(params);
+        return {
+          content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
+        };
+      } catch (error) {
+        return formatMcpError("updating product", error);
       }
     },
   );
