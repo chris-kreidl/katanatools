@@ -53,8 +53,8 @@ const productVariantSchema = z.object({
   sales_price: z.number().min(0).max(100000000000).nullable().optional(),
   config_attributes: z.array(configAttributeSchema).min(1).optional(),
   internal_barcode: z.string().min(3).max(40).optional(),
-  registered_barcode: z.string().min(3).max(40).optional(),
-  supplier_item_codes: z.array(z.string().min(1).max(40)).min(1).optional(),
+  registered_barcode: z.string().max(120).optional(),
+  supplier_item_codes: z.array(z.string().min(1)).min(1).optional(),
   custom_fields: z.array(customFieldSchema).max(3).optional(),
 });
 
