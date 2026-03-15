@@ -39,3 +39,25 @@ export const createManufacturingOrderSchema = z.object({
   batch_transactions: z.array(batchTransactionSchema).optional(),
 });
 export type createManufacturingOrderSchemaType = z.infer<typeof createManufacturingOrderSchema>;
+
+export const updateManufacturingOrderSchema = z
+  .object({
+    id: z.number().int().positive(),
+    status: z.enum(["NOT_STARTED", "BLOCKED", "IN_PROGRESS", "DONE"]).optional(),
+    order_no: z.string().optional(),
+    variant_id: z.number().int().positive().optional(),
+    location_id: z.number().int().positive().optional(),
+    planned_quantity: z.number().min(0).optional(),
+    actual_quantity: z.number().min(0).optional(),
+    order_created_date: z.string().optional(),
+    production_deadline_date: z.string().optional(),
+    additional_info: z.string().optional(),
+    done_date: z.string().optional(),
+    batch_transactions: z.array(batchTransactionSchema).optional(),
+  })
+  .refine(
+    (data) =>
+      Object.keys(data).some((key) => key !== "id" && data[key as keyof typeof data] !== undefined),
+    { message: "Must include at least one updatable field besides id" },
+  );
+export type updateManufacturingOrderSchemaType = z.infer<typeof updateManufacturingOrderSchema>;

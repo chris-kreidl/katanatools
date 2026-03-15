@@ -3,6 +3,7 @@ import {
   listManufacturingOrdersSchema,
   getManufacturingOrderSchema,
   createManufacturingOrderSchema,
+  updateManufacturingOrderSchema,
 } from "@ckreidl/katana-client";
 import type { KatanaClient } from "@ckreidl/katana-client";
 import { formatMcpError } from "./errorUtils";
@@ -55,6 +56,23 @@ export function registerManufacturingOrderTools(server: McpServer, katanaClient:
         };
       } catch (error) {
         return formatMcpError("creating manufacturing order", error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "updateManufacturingOrder",
+    {
+      inputSchema: updateManufacturingOrderSchema,
+    },
+    async (params) => {
+      try {
+        const response = await katanaClient.updateManufacturingOrder(params);
+        return {
+          content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
+        };
+      } catch (error) {
+        return formatMcpError("updating manufacturing order", error);
       }
     },
   );

@@ -4,6 +4,7 @@ import type {
   listManufacturingOrdersSchemaType,
   createManufacturingOrderSchemaType,
   getManufacturingOrderSchemaType,
+  updateManufacturingOrderSchemaType,
   createProductSchemaType,
   getProductSchemaType,
   updateProductSchemaType,
@@ -339,6 +340,15 @@ export class KatanaClient {
   ): Promise<KatanaManufacturingOrder> {
     const { id } = params;
     return this.request<KatanaManufacturingOrder>("GET", `manufacturing_orders/${id}`);
+  }
+
+  async updateManufacturingOrder(
+    payload: updateManufacturingOrderSchemaType,
+  ): Promise<KatanaManufacturingOrder> {
+    const { id, ...body } = payload;
+    return this.request<KatanaManufacturingOrder>("PATCH", `manufacturing_orders/${id}`, {
+      body: JSON.stringify(body),
+    });
   }
 
   async listSuppliers(params: listSuppliersSchemaType): Promise<KatanaListSuppliersResponse> {

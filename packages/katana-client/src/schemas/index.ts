@@ -26,11 +26,13 @@ export {
   listManufacturingOrdersSchema,
   getManufacturingOrderSchema,
   createManufacturingOrderSchema,
+  updateManufacturingOrderSchema,
 } from "./manufacturingOrders";
 export type {
   listManufacturingOrdersSchemaType,
   getManufacturingOrderSchemaType,
   createManufacturingOrderSchemaType,
+  updateManufacturingOrderSchemaType,
 } from "./manufacturingOrders";
 export { listPurchaseOrdersSchema, createPurchaseOrderSchema } from "./purchaseOrders";
 export type { listPurchaseOrdersSchemaType, createPurchaseOrderSchemaType } from "./purchaseOrders";
