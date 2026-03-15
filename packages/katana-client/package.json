@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "ofetch": "^1.5.1",
-    "p-throttle": "^6.1.0",
+    "p-throttle": "^8.0.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
