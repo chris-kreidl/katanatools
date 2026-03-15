@@ -24,6 +24,7 @@ describe("registerTools", () => {
     expect(names).toEqual(
       [
         "createManufacturingOrder",
+        "getManufacturingOrder",
         "createProduct",
         "createVariant",
         "getDemandForecasts",
@@ -36,6 +37,9 @@ describe("registerTools", () => {
         "listInventory",
         "listInventoryMovements",
         "listLocations",
+        "updateManufacturingOrder",
+        "makeToOrderManufacturingOrder",
+        "unlinkManufacturingOrder",
         "listManufacturingOrders",
         "listMaterials",
         "listProducts",
