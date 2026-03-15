@@ -61,3 +61,16 @@ export const updateManufacturingOrderSchema = z
     { message: "Must include at least one updatable field besides id" },
   );
 export type updateManufacturingOrderSchemaType = z.infer<typeof updateManufacturingOrderSchema>;
+
+export const makeToOrderManufacturingOrderSchema = z.object({
+  sales_order_row_id: z.number().int().positive(),
+  create_subassemblies: z.boolean().optional(),
+});
+export type makeToOrderManufacturingOrderSchemaType = z.infer<
+  typeof makeToOrderManufacturingOrderSchema
+>;
+
+export const unlinkManufacturingOrderSchema = z.object({
+  sales_order_row_id: z.number().int().positive(),
+});
+export type unlinkManufacturingOrderSchemaType = z.infer<typeof unlinkManufacturingOrderSchema>;

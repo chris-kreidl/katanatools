@@ -5,6 +5,8 @@ import type {
   createManufacturingOrderSchemaType,
   getManufacturingOrderSchemaType,
   updateManufacturingOrderSchemaType,
+  makeToOrderManufacturingOrderSchemaType,
+  unlinkManufacturingOrderSchemaType,
   createProductSchemaType,
   getProductSchemaType,
   updateProductSchemaType,
@@ -348,6 +350,20 @@ export class KatanaClient {
     const { id, ...body } = payload;
     return this.request<KatanaManufacturingOrder>("PATCH", `manufacturing_orders/${id}`, {
       body: JSON.stringify(body),
+    });
+  }
+
+  async makeToOrderManufacturingOrder(
+    payload: makeToOrderManufacturingOrderSchemaType,
+  ): Promise<KatanaManufacturingOrder> {
+    return this.request<KatanaManufacturingOrder>("POST", "manufacturing_order_make_to_order", {
+      body: JSON.stringify(payload),
+    });
+  }
+
+  async unlinkManufacturingOrder(payload: unlinkManufacturingOrderSchemaType): Promise<void> {
+    return this.request<void>("POST", "manufacturing_order_unlink", {
+      body: JSON.stringify(payload),
     });
   }
 

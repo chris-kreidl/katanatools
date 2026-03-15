@@ -4,6 +4,8 @@ import {
   getManufacturingOrderSchema,
   createManufacturingOrderSchema,
   updateManufacturingOrderSchema,
+  makeToOrderManufacturingOrderSchema,
+  unlinkManufacturingOrderSchema,
 } from "@ckreidl/katana-client";
 import type { KatanaClient } from "@ckreidl/katana-client";
 import { formatMcpError } from "./errorUtils";
@@ -73,6 +75,40 @@ export function registerManufacturingOrderTools(server: McpServer, katanaClient:
         };
       } catch (error) {
         return formatMcpError("updating manufacturing order", error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "makeToOrderManufacturingOrder",
+    {
+      inputSchema: makeToOrderManufacturingOrderSchema,
+    },
+    async (params) => {
+      try {
+        const response = await katanaClient.makeToOrderManufacturingOrder(params);
+        return {
+          content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
+        };
+      } catch (error) {
+        return formatMcpError("creating make-to-order manufacturing order", error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "unlinkManufacturingOrder",
+    {
+      inputSchema: unlinkManufacturingOrderSchema,
+    },
+    async (params) => {
+      try {
+        await katanaClient.unlinkManufacturingOrder(params);
+        return {
+          content: [{ type: "text", text: "Manufacturing order unlinked successfully" }],
+        };
+      } catch (error) {
+        return formatMcpError("unlinking manufacturing order", error);
       }
     },
   );

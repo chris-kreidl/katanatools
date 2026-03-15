@@ -38,6 +38,8 @@ describe("registerTools", () => {
         "listInventoryMovements",
         "listLocations",
         "updateManufacturingOrder",
+        "makeToOrderManufacturingOrder",
+        "unlinkManufacturingOrder",
         "listManufacturingOrders",
         "listMaterials",
         "listProducts",
