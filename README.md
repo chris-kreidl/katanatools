@@ -7,6 +7,66 @@ TypeScript packages for the [Katana MRP](https://katanamrp.com) manufacturing pl
 | [`@ckreidl/katana-client`](./packages/katana-client) | TypeScript client for the Katana MRP API |
 | [`@ckreidl/katana-mcp`](./packages/katana-mcp) | MCP server exposing Katana API as tools for AI models |
 
+## API Coverage
+
+The table below shows which [Katana API](https://developer.katanamrp.com/reference/api-introduction) resources and operations are currently implemented.
+
+| Resource | List | Get | Create | Update | Delete | Other |
+| --- | :---: | :---: | :---: | :---: | :---: | :---: |
+| Additional Costs | | | | | | |
+| Batch | | | | | | |
+| BOM Row | x | | | | | |
+| Customer | | | | | | |
+| Customer Address | | | | | | |
+| Custom Fields | | | | | | |
+| Demand Forecast | x | | | | | |
+| Factory | | | | | | |
+| Inventory | x | | | | | |
+| Inventory Movements | x | | | | | |
+| Location | x | x | | | | |
+| Manufacturing Order | x | x | x | x | | MTO, Unlink |
+| Manufacturing Order Operation | | | | | | |
+| Manufacturing Order Production | | | | | | |
+| Manufacturing Order Production Ingredient | | | | | | |
+| Manufacturing Order Recipe | | | | | | |
+| Material | x | | | | | |
+| Operator | | | | | | |
+| Outsourced PO Recipe Row | | | | | | |
+| Price List | | | | | | |
+| Price List Customers | | | | | | |
+| Price List Rows | | | | | | |
+| Product | x | x | x | x | | |
+| Product Operation | | | | | | |
+| Purchase Order | x | | x | | | |
+| Purchase Order Accounting Metadata | | | | | | |
+| Purchase Order Additional Cost Row | | | | | | |
+| Purchase Order Row | | | | | | |
+| Recipe | | | | | | |
+| Sales Order | x | | | | | |
+| Sales Order Accounting Metadata | | | | | | |
+| Sales Order Address | | | | | | |
+| Sales Order Fulfillment | | | | | | |
+| Sales Order Row | x | | | | | |
+| Sales Order Shipping Fee | | | | | | |
+| Sales Return | | | | | | |
+| Sales Return Row | | | | | | |
+| Serial Number | | | | | | |
+| Serial Number Stock | | | | | | |
+| Service | | | | | | |
+| Stock Adjustment | | | | | | |
+| Stock Transfer | | | | | | |
+| Stocktake | | | | | | |
+| Stocktake Row | | | | | | |
+| Storage Bin | | | | | | |
+| Supplier | x | | | | | |
+| Supplier Address | | | | | | |
+| Tax Rate | | | | | | |
+| User | | | | | | |
+| Variant | x | x | x | x | | |
+| Variant Default Storage Bin | | | | | | |
+| Webhook | | | | | | |
+| Webhook Logs | | | | | | |
+
 ## Getting Started
 
 ```sh
@@ -17,65 +77,7 @@ pnpm test
 
 ## Contributing
 
-### Setup
-
-```sh
-git clone https://github.com/chris-kreidl/katanatools
-cd katana
-pnpm install
-```
-
-### Development
-
-```sh
-pnpm build        # Build all packages
-pnpm test         # Run tests
-pnpm typecheck    # Type-check
-pnpm lint         # Lint
-pnpm fmt          # Format
-pnpm fmt:check    # Check formatting without writing
-```
-
-You can target a single package with `pnpm --filter <package> <script>`, e.g.:
-
-```sh
-pnpm --filter katana-client test
-```
-
-### Making Changes
-
-1. Create a branch for your work:
-   ```sh
-   git checkout -b my-feature
-   ```
-
-2. Make your changes and ensure checks pass:
-   ```sh
-   pnpm typecheck && pnpm lint && pnpm test && pnpm build
-   ```
-
-3. Add a **changeset** to describe your changes (this is how versions and changelogs are managed):
-   ```sh
-   pnpm changeset
-   ```
-   This will interactively prompt you to:
-   - **Select which packages are affected** — use arrow keys and space to select
-   - **Choose a bump type** for each — `patch` (bug fix), `minor` (new feature), or `major` (breaking change)
-   - **Write a summary** — a short description of the change for the changelog
-
-   A markdown file will be created in the `.changeset/` directory. Commit this file along with your code changes.
-
-4. Commit and open a pull request.
-
-### How Changesets Work
-
-[Changesets](https://github.com/changesets/changesets) decouples "describing a change" from "releasing a version." Here's the flow:
-
-- When you open a PR, you include a changeset file (created by `pnpm changeset`). This file is a small markdown file that records which packages changed and by how much (patch/minor/major).
-- When the PR merges to `main`, the release workflow detects pending changesets and opens a **"Version Packages" PR** that bumps versions in `package.json` files and updates `CHANGELOG.md`.
-- When that Version Packages PR is merged, the release workflow publishes the new versions to npm.
-
-If a PR doesn't need a version bump (e.g., docs-only, CI changes, refactors with no public API change), just don't add a changeset — the release workflow will skip it.
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## License
 
