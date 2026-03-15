@@ -73,7 +73,7 @@ export const createProductSchema = z.object({
   serial_tracked: z.boolean().optional(),
   operations_in_sequence: z.boolean().optional(),
   purchase_uom: z.string().max(7).optional(),
-  purchase_uom_conversion_rate: z.number().max(1000000000000).optional(),
+  purchase_uom_conversion_rate: z.number().min(0).max(1000000000000).optional(),
   lead_time: z.number().int().max(999).nullable().optional(),
   minimum_order_quantity: z.number().min(0).max(999999999).nullable().optional(),
   configs: z.array(configSchema).min(1).optional(),
@@ -104,7 +104,7 @@ export const updateProductSchema = z
     serial_tracked: z.boolean().optional(),
     operations_in_sequence: z.boolean().optional(),
     purchase_uom: z.string().max(7).optional(),
-    purchase_uom_conversion_rate: z.number().max(1000000000000).optional(),
+    purchase_uom_conversion_rate: z.number().min(0).max(1000000000000).optional(),
     configs: z.array(updateConfigSchema).min(1).optional(),
     custom_field_collection_id: z.number().int().positive().max(2147483647).nullable().optional(),
   })
