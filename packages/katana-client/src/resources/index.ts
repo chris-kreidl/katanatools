@@ -1,0 +1,13 @@
+export { ProductsResource } from "./products";
+export { VariantsResource } from "./variants";
+export { ManufacturingOrdersResource } from "./manufacturingOrders";
+export { MaterialsResource } from "./materials";
+export { SuppliersResource } from "./suppliers";
+export { SalesOrdersResource } from "./salesOrders";
+export { PurchaseOrdersResource } from "./purchaseOrders";
+export { DemandForecastsResource } from "./demandForecasts";
+export { LocationsResource } from "./locations";
+export { SalesOrderRowsResource } from "./salesOrderRows";
+export { InventoryResource } from "./inventory";
+export { InventoryMovementsResource } from "./inventoryMovements";
+export { BomRowsResource } from "./bomRows";
