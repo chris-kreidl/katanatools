@@ -21,10 +21,19 @@ const client = new KatanaClient({
 });
 
 // List products
-const products = await client.listProducts({ name: "Widget" });
+const products = await client.products.list({ name: "Widget" });
+
+// Get a single product
+const product = await client.products.get({ id: 1 });
+
+// Create a product
+const created = await client.products.create({ name: "Widget", uom: "pcs" });
+
+// Update a product
+const updated = await client.products.update({ id: 1, name: "Updated Widget" });
 
 // Paginate through all results
-for await (const page of client.paginate(client.listProducts, {})) {
+for await (const page of client.paginate(client.products.list, {})) {
   console.log(page);
 }
 ```
