@@ -11,7 +11,7 @@ export function registerLocationTools(server: McpServer, katanaClient: KatanaCli
     },
     async (params) => {
       try {
-        const response = await katanaClient.listLocations(params);
+        const response = await katanaClient.locations.list(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };

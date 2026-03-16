@@ -11,7 +11,7 @@ export function registerInventoryMovementTools(server: McpServer, katanaClient: 
     },
     async (params) => {
       try {
-        const response = await katanaClient.listInventoryMovements(params);
+        const response = await katanaClient.inventoryMovements.list(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };

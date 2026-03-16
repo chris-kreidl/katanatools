@@ -55,7 +55,7 @@ describe("registerTools", () => {
   it("invokes a tool handler and returns JSON content", async () => {
     const server = new FakeServer();
     const client = {
-      listProducts: async () => ({ data: [{ id: 1, name: "A" }] }),
+      products: { list: async () => ({ data: [{ id: 1, name: "A" }] }) },
     } as any;
 
     registerTools(server as any, client);
@@ -75,10 +75,12 @@ describe("registerTools", () => {
   it("returns a formatted MCP error when the handler throws", async () => {
     const server = new FakeServer();
     const client = {
-      listProducts: async () => {
-        const error = new Error("Boom") as Error & { statusCode: number };
-        error.statusCode = 500;
-        throw error;
+      products: {
+        list: async () => {
+          const error = new Error("Boom") as Error & { statusCode: number };
+          error.statusCode = 500;
+          throw error;
+        },
       },
     } as any;
 

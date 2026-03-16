@@ -11,7 +11,7 @@ export function registerSalesOrderRowTools(server: McpServer, katanaClient: Kata
     },
     async (params) => {
       try {
-        const response = await katanaClient.listSalesOrderRows(params);
+        const response = await katanaClient.salesOrderRows.list(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };

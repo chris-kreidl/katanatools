@@ -11,7 +11,7 @@ export function registerBomRowTools(server: McpServer, katanaClient: KatanaClien
     },
     async (params) => {
       try {
-        const response = await katanaClient.listBomRows(params);
+        const response = await katanaClient.bomRows.list(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };

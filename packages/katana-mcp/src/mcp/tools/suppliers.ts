@@ -11,7 +11,7 @@ export function registerSupplierTools(server: McpServer, katanaClient: KatanaCli
     },
     async (params) => {
       try {
-        const response = await katanaClient.listSuppliers(params);
+        const response = await katanaClient.suppliers.list(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };

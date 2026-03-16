@@ -11,7 +11,7 @@ export function registerPurchaseOrderTools(server: McpServer, katanaClient: Kata
     },
     async (params) => {
       try {
-        const response = await katanaClient.listPurchaseOrders(params);
+        const response = await katanaClient.purchaseOrders.list(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
@@ -28,7 +28,7 @@ export function registerPurchaseOrderTools(server: McpServer, katanaClient: Kata
     },
     async (params) => {
       try {
-        const response = await katanaClient.createPurchaseOrder(params);
+        const response = await katanaClient.purchaseOrders.create(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };

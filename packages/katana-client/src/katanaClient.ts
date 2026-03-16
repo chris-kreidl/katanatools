@@ -1,54 +1,18 @@
 import { ofetch } from "ofetch";
 import pThrottle from "p-throttle";
-import type {
-  listManufacturingOrdersSchemaType,
-  createManufacturingOrderSchemaType,
-  getManufacturingOrderSchemaType,
-  updateManufacturingOrderSchemaType,
-  makeToOrderManufacturingOrderSchemaType,
-  unlinkManufacturingOrderSchemaType,
-  createProductSchemaType,
-  getProductSchemaType,
-  updateProductSchemaType,
-  listMaterialsSchemaType,
-  listProductsSchemaType,
-  listSalesOrdersSchemaType,
-  listPurchaseOrdersSchemaType,
-  createPurchaseOrderSchemaType,
-  listSuppliersSchemaType,
-  getDemandForecastsSchemaType,
-  listLocationsSchemaType,
-  listSalesOrderRowsSchemaType,
-  listInventorySchemaType,
-  listInventoryMovementsSchemaType,
-  listBomRowsSchemaType,
-  createVariantSchemaType,
-  updateVariantSchemaType,
-  listVariantsSchemaType,
-  getVariantSchemaType,
-} from "./schemas";
-import type {
-  KatanaListManufacturingOrdersResponse,
-  KatanaManufacturingOrder,
-  KatanaCreateManufacturingOrderResponse,
-  KatanaCreateProductResponse,
-  KatanaProduct,
-  KatanaListMaterialsResponse,
-  KatanaListProductsResponse,
-  KatanaListPurchaseOrdersResponse,
-  KatanaCreatePurchaseOrderResponse,
-  KatanaListSalesOrdersResponse,
-  KatanaListSuppliersResponse,
-  KatanaDemandForecastResponse,
-  KatanaListLocationsResponse,
-  KatanaListSalesOrderRowsResponse,
-  KatanaListInventoryResponse,
-  KatanaListInventoryMovementsResponse,
-  KatanaListBomRowsResponse,
-  KatanaCreateVariantResponse,
-  KatanaListVariantsResponse,
-  KatanaVariant,
-} from "./types";
+import { ProductsResource } from "./resources/products";
+import { VariantsResource } from "./resources/variants";
+import { ManufacturingOrdersResource } from "./resources/manufacturingOrders";
+import { MaterialsResource } from "./resources/materials";
+import { SuppliersResource } from "./resources/suppliers";
+import { SalesOrdersResource } from "./resources/salesOrders";
+import { PurchaseOrdersResource } from "./resources/purchaseOrders";
+import { DemandForecastsResource } from "./resources/demandForecasts";
+import { LocationsResource } from "./resources/locations";
+import { SalesOrderRowsResource } from "./resources/salesOrderRows";
+import { InventoryResource } from "./resources/inventory";
+import { InventoryMovementsResource } from "./resources/inventoryMovements";
+import { BomRowsResource } from "./resources/bomRows";
 
 export type ParamType = "string" | "number" | "boolean" | "numArray" | "strArray";
 
@@ -90,6 +54,20 @@ export class KatanaClient {
   private throttle: ReturnType<typeof pThrottle>;
   private requestsPerSecond: number;
 
+  readonly products: ProductsResource;
+  readonly variants: VariantsResource;
+  readonly manufacturingOrders: ManufacturingOrdersResource;
+  readonly materials: MaterialsResource;
+  readonly suppliers: SuppliersResource;
+  readonly salesOrders: SalesOrdersResource;
+  readonly purchaseOrders: PurchaseOrdersResource;
+  readonly demandForecasts: DemandForecastsResource;
+  readonly locations: LocationsResource;
+  readonly salesOrderRows: SalesOrderRowsResource;
+  readonly inventory: InventoryResource;
+  readonly inventoryMovements: InventoryMovementsResource;
+  readonly bomRows: BomRowsResource;
+
   constructor({
     requestsPerSecond,
     apiKey,
@@ -105,6 +83,20 @@ export class KatanaClient {
       interval: 1000,
     });
     if (apiKey) this.apiKey = apiKey;
+
+    this.products = new ProductsResource(this);
+    this.variants = new VariantsResource(this);
+    this.manufacturingOrders = new ManufacturingOrdersResource(this);
+    this.materials = new MaterialsResource(this);
+    this.suppliers = new SuppliersResource(this);
+    this.salesOrders = new SalesOrdersResource(this);
+    this.purchaseOrders = new PurchaseOrdersResource(this);
+    this.demandForecasts = new DemandForecastsResource(this);
+    this.locations = new LocationsResource(this);
+    this.salesOrderRows = new SalesOrderRowsResource(this);
+    this.inventory = new InventoryResource(this);
+    this.inventoryMovements = new InventoryMovementsResource(this);
+    this.bomRows = new BomRowsResource(this);
   }
 
   initialize() {
@@ -188,8 +180,7 @@ export class KatanaClient {
    * Automatically handles pagination by incrementing page numbers until no more data.
    *
    * @example
-   * // Process items as they arrive (memory efficient for large datasets)
-   * for await (const page of client.paginate(client.listProducts, { is_producible: true })) {
+   * for await (const page of client.paginate(client.products.list, { is_producible: true })) {
    *   for (const product of page) {
    *     console.log(product.name);
    *   }
@@ -204,7 +195,7 @@ export class KatanaClient {
     let page = 1;
 
     while (true) {
-      const res = await method.call(this, { ...params, limit, page: String(page) } as P);
+      const res = await method({ ...params, limit, page: String(page) } as P);
       if (!res.data.length) break;
       yield res.data;
       page += 1;
@@ -217,7 +208,7 @@ export class KatanaClient {
    * `paginate()` instead to process items incrementally.
    *
    * @example
-   * const allProducts = await client.listAllPages(client.listProducts, { is_producible: true });
+   * const allProducts = await client.listAllPages(client.products.list, { is_producible: true });
    * console.log(`Found ${allProducts.length} products`);
    */
   async listAllPages<T, P extends { limit?: string; page?: string }>(
@@ -230,380 +221,5 @@ export class KatanaClient {
       all.push(...page);
     }
     return all;
-  }
-
-  async listProducts(params: listProductsSchemaType): Promise<KatanaListProductsResponse> {
-    const queryParams = buildQueryParams(params, {
-      ids: "numArray",
-      extend: "strArray",
-      name: "string",
-      uom: "string",
-      is_sellable: "boolean",
-      is_producible: "boolean",
-      is_purchasable: "boolean",
-      is_auto_assembly: "boolean",
-      default_supplier_id: "number",
-      batch_tracked: "boolean",
-      serial_tracked: "boolean",
-      operations_in_sequence: "boolean",
-      purchase_uom: "string",
-      purchase_uom_conversion_rate: "number",
-      include_deleted: "boolean",
-      include_archived: "boolean",
-      limit: "string",
-      page: "string",
-      created_at_min: "string",
-      created_at_max: "string",
-      updated_at_min: "string",
-      updated_at_max: "string",
-    });
-    return this.request<KatanaListProductsResponse>("GET", "products", {}, queryParams);
-  }
-
-  async getProduct(params: getProductSchemaType): Promise<KatanaProduct> {
-    const { id, ...rest } = params;
-    const queryParams = buildQueryParams(rest, {
-      extend: "strArray",
-    });
-    return this.request<KatanaProduct>("GET", `products/${id}`, {}, queryParams);
-  }
-
-  async createProduct(payload: createProductSchemaType): Promise<KatanaCreateProductResponse> {
-    return this.request<KatanaCreateProductResponse>("POST", "products", {
-      body: JSON.stringify(payload),
-    });
-  }
-
-  async updateProduct(payload: updateProductSchemaType): Promise<KatanaProduct> {
-    const { id, ...body } = payload;
-    return this.request<KatanaProduct>("PATCH", `products/${id}`, {
-      body: JSON.stringify(body),
-    });
-  }
-
-  async listMaterials(params: listMaterialsSchemaType): Promise<KatanaListMaterialsResponse> {
-    const queryParams = buildQueryParams(params, {
-      ids: "numArray",
-      extend: "strArray",
-      name: "string",
-      uom: "string",
-      default_supplier_id: "number",
-      is_sellable: "boolean",
-      batch_tracked: "boolean",
-      purchase_uom: "string",
-      purchase_uom_conversion_rate: "number",
-      include_deleted: "boolean",
-      include_archived: "boolean",
-      limit: "string",
-      page: "string",
-      created_at_min: "string",
-      created_at_max: "string",
-      updated_at_min: "string",
-      updated_at_max: "string",
-    });
-    return this.request<KatanaListMaterialsResponse>("GET", "materials", {}, queryParams);
-  }
-
-  async listManufacturingOrders(
-    params: listManufacturingOrdersSchemaType,
-  ): Promise<KatanaListManufacturingOrdersResponse> {
-    const queryParams = buildQueryParams(params, {
-      ids: "numArray",
-      status: "string",
-      order_no: "string",
-      location_id: "number",
-      is_linked_to_sales_order: "boolean",
-      include_deleted: "boolean",
-      limit: "string",
-      page: "string",
-      created_at_min: "string",
-      created_at_max: "string",
-      updated_at_min: "string",
-      updated_at_max: "string",
-    });
-    return this.request<KatanaListManufacturingOrdersResponse>(
-      "GET",
-      "manufacturing_orders",
-      {},
-      queryParams,
-    );
-  }
-
-  async createManufacturingOrder(
-    payload: createManufacturingOrderSchemaType,
-  ): Promise<KatanaCreateManufacturingOrderResponse> {
-    return this.request<KatanaCreateManufacturingOrderResponse>("POST", "manufacturing_orders", {
-      body: JSON.stringify(payload),
-    });
-  }
-
-  async getManufacturingOrder(
-    params: getManufacturingOrderSchemaType,
-  ): Promise<KatanaManufacturingOrder> {
-    const { id } = params;
-    return this.request<KatanaManufacturingOrder>("GET", `manufacturing_orders/${id}`);
-  }
-
-  async updateManufacturingOrder(
-    payload: updateManufacturingOrderSchemaType,
-  ): Promise<KatanaManufacturingOrder> {
-    const { id, ...body } = payload;
-    return this.request<KatanaManufacturingOrder>("PATCH", `manufacturing_orders/${id}`, {
-      body: JSON.stringify(body),
-    });
-  }
-
-  async makeToOrderManufacturingOrder(
-    payload: makeToOrderManufacturingOrderSchemaType,
-  ): Promise<KatanaManufacturingOrder> {
-    return this.request<KatanaManufacturingOrder>("POST", "manufacturing_order_make_to_order", {
-      body: JSON.stringify(payload),
-    });
-  }
-
-  async unlinkManufacturingOrder(payload: unlinkManufacturingOrderSchemaType): Promise<void> {
-    return this.request<void>("POST", "manufacturing_order_unlink", {
-      body: JSON.stringify(payload),
-    });
-  }
-
-  async listSuppliers(params: listSuppliersSchemaType): Promise<KatanaListSuppliersResponse> {
-    const queryParams = buildQueryParams(params, {
-      ids: "numArray",
-      name: "string",
-      email: "string",
-      phone: "string",
-      include_deleted: "boolean",
-      limit: "string",
-      page: "string",
-      created_at_min: "string",
-      created_at_max: "string",
-      updated_at_min: "string",
-      updated_at_max: "string",
-    });
-    return this.request<KatanaListSuppliersResponse>("GET", "suppliers", {}, queryParams);
-  }
-
-  async listSalesOrders(params: listSalesOrdersSchemaType): Promise<KatanaListSalesOrdersResponse> {
-    const queryParams = buildQueryParams(params, {
-      ids: "numArray",
-      order_no: "string",
-      source: "string",
-      location_id: "number",
-      customer_id: "number",
-      status: "string",
-      currency: "string",
-      invoicing_status: "string",
-      product_availability: "string",
-      ingredient_availability: "string",
-      production_status: "string",
-      ecommerce_order_type: "string",
-      ecommerce_store_name: "string",
-      ecommerce_order_id: "string",
-      include_deleted: "boolean",
-      limit: "string",
-      page: "string",
-      created_at_min: "string",
-      created_at_max: "string",
-      updated_at_min: "string",
-      updated_at_max: "string",
-    });
-    return this.request<KatanaListSalesOrdersResponse>("GET", "sales_orders", {}, queryParams);
-  }
-
-  async listPurchaseOrders(
-    params: listPurchaseOrdersSchemaType,
-  ): Promise<KatanaListPurchaseOrdersResponse> {
-    const queryParams = buildQueryParams(params, {
-      ids: "numArray",
-      extend: "strArray",
-      order_no: "string",
-      entity_type: "string",
-      status: "string",
-      billing_status: "string",
-      currency: "string",
-      location_id: "number",
-      tracking_location_id: "number",
-      supplier_id: "number",
-      include_deleted: "boolean",
-      limit: "string",
-      page: "string",
-      created_at_min: "string",
-      created_at_max: "string",
-      updated_at_min: "string",
-      updated_at_max: "string",
-    });
-    return this.request<KatanaListPurchaseOrdersResponse>(
-      "GET",
-      "purchase_orders",
-      {},
-      queryParams,
-    );
-  }
-
-  async createPurchaseOrder(
-    payload: createPurchaseOrderSchemaType,
-  ): Promise<KatanaCreatePurchaseOrderResponse> {
-    return this.request<KatanaCreatePurchaseOrderResponse>("POST", "purchase_orders", {
-      body: JSON.stringify(payload),
-    });
-  }
-
-  async getDemandForecasts(
-    params: getDemandForecastsSchemaType,
-  ): Promise<KatanaDemandForecastResponse> {
-    const queryParams = buildQueryParams(params, {
-      variant_id: "number",
-      location_id: "number",
-    });
-    return this.request<KatanaDemandForecastResponse>("GET", "demand_forecasts", {}, queryParams);
-  }
-
-  async listLocations(params: listLocationsSchemaType): Promise<KatanaListLocationsResponse> {
-    const queryParams = buildQueryParams(params, {
-      ids: "numArray",
-      name: "string",
-      legal_name: "string",
-      address_id: "number",
-      sales_allowed: "boolean",
-      manufacturing_allowed: "boolean",
-      purchases_allowed: "boolean",
-      rank: "number",
-      include_deleted: "boolean",
-      limit: "string",
-      page: "string",
-      created_at_min: "string",
-      created_at_max: "string",
-      updated_at_min: "string",
-      updated_at_max: "string",
-    });
-    return this.request<KatanaListLocationsResponse>("GET", "locations", {}, queryParams);
-  }
-
-  async listSalesOrderRows(
-    params: listSalesOrderRowsSchemaType,
-  ): Promise<KatanaListSalesOrderRowsResponse> {
-    const queryParams = buildQueryParams(params, {
-      ids: "numArray",
-      sales_order_ids: "numArray",
-      extend: "strArray",
-      variant_id: "number",
-      location_id: "number",
-      tax_rate_id: "number",
-      linked_manufacturing_order_id: "number",
-      product_availability: "string",
-      include_deleted: "boolean",
-      limit: "string",
-      page: "string",
-      created_at_min: "string",
-      created_at_max: "string",
-      updated_at_min: "string",
-      updated_at_max: "string",
-    });
-    return this.request<KatanaListSalesOrderRowsResponse>(
-      "GET",
-      "sales_order_rows",
-      {},
-      queryParams,
-    );
-  }
-
-  async listInventory(params: listInventorySchemaType): Promise<KatanaListInventoryResponse> {
-    const queryParams = buildQueryParams(params, {
-      variant_id: "numArray",
-      extend: "strArray",
-      location_id: "number",
-      include_archived: "boolean",
-      limit: "string",
-      page: "string",
-    });
-    return this.request<KatanaListInventoryResponse>("GET", "inventory", {}, queryParams);
-  }
-
-  async listInventoryMovements(
-    params: listInventoryMovementsSchemaType,
-  ): Promise<KatanaListInventoryMovementsResponse> {
-    const queryParams = buildQueryParams(params, {
-      ids: "numArray",
-      variant_ids: "numArray",
-      location_id: "number",
-      resource_type: "string",
-      resource_id: "number",
-      caused_by_order_no: "string",
-      caused_by_resource_id: "number",
-      limit: "string",
-      page: "string",
-      created_at_min: "string",
-      created_at_max: "string",
-      updated_at_min: "string",
-      updated_at_max: "string",
-    });
-    return this.request<KatanaListInventoryMovementsResponse>(
-      "GET",
-      "inventory_movements",
-      {},
-      queryParams,
-    );
-  }
-
-  async listBomRows(params: listBomRowsSchemaType): Promise<KatanaListBomRowsResponse> {
-    const queryParams = buildQueryParams(params, {
-      id: "string",
-      product_item_id: "number",
-      product_variant_id: "number",
-      ingredient_variant_id: "number",
-      limit: "string",
-      page: "string",
-      created_at_min: "string",
-      created_at_max: "string",
-      updated_at_min: "string",
-      updated_at_max: "string",
-    });
-    return this.request<KatanaListBomRowsResponse>("GET", "bom_rows", {}, queryParams);
-  }
-
-  async listVariants(params: listVariantsSchemaType): Promise<KatanaListVariantsResponse> {
-    const queryParams = buildQueryParams(params, {
-      ids: "numArray",
-      product_id: "number",
-      material_id: "number",
-      sku: "strArray",
-      sales_price: "number",
-      purchase_price: "number",
-      internal_barcode: "string",
-      registered_barcode: "string",
-      supplier_item_codes: "strArray",
-      extend: "strArray",
-      include_deleted: "boolean",
-      include_archived: "boolean",
-      limit: "string",
-      page: "string",
-      created_at_min: "string",
-      created_at_max: "string",
-      updated_at_min: "string",
-      updated_at_max: "string",
-    });
-    return this.request<KatanaListVariantsResponse>("GET", "variants", {}, queryParams);
-  }
-
-  async getVariant(params: getVariantSchemaType): Promise<KatanaVariant> {
-    const { id, ...rest } = params;
-    const queryParams = buildQueryParams(rest, {
-      extend: "strArray",
-    });
-    return this.request<KatanaVariant>("GET", `variants/${id}`, {}, queryParams);
-  }
-
-  async createVariant(payload: createVariantSchemaType): Promise<KatanaCreateVariantResponse> {
-    return this.request<KatanaCreateVariantResponse>("POST", "variants", {
-      body: JSON.stringify(payload),
-    });
-  }
-
-  async updateVariant(payload: updateVariantSchemaType): Promise<KatanaVariant> {
-    const { id, ...body } = payload;
-    return this.request<KatanaVariant>("PATCH", `variants/${id}`, {
-      body: JSON.stringify(body),
-    });
   }
 }
