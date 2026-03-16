@@ -12,9 +12,25 @@ import type {
   KatanaCreateProductResponse,
 } from "../types";
 
+/**
+ * Products represent finished goods or items that can be manufactured, sold, or purchased.
+ * Each product can have one or more {@link VariantsResource | variants} representing
+ * different configurations (e.g. size, color).
+ *
+ * @see {@link https://developer.katanamrp.com/reference/list-products | Katana API — Products}
+ */
 export class ProductsResource {
   constructor(private client: KatanaClient) {}
 
+  /**
+   * Returns a paginated list of products, optionally filtered by name, type flags,
+   * supplier, tracking settings, and date ranges.
+   *
+   * @example
+   * ```ts
+   * const { data } = await client.products.list({ is_producible: true, limit: "50" });
+   * ```
+   */
   list = async (params: listProductsSchemaType): Promise<KatanaListProductsResponse> => {
     const queryParams = buildQueryParams(params, {
       ids: "numArray",
@@ -43,6 +59,15 @@ export class ProductsResource {
     return this.client.request<KatanaListProductsResponse>("GET", "products", {}, queryParams);
   };
 
+  /**
+   * Retrieves a single product by ID. Use the `extend` parameter to include
+   * related data such as variants, configs, or supplier details.
+   *
+   * @example
+   * ```ts
+   * const product = await client.products.get({ id: 42, extend: ["variants"] });
+   * ```
+   */
   get = async (params: getProductSchemaType): Promise<KatanaProduct> => {
     const { id, ...rest } = params;
     const queryParams = buildQueryParams(rest, {
@@ -51,12 +76,30 @@ export class ProductsResource {
     return this.client.request<KatanaProduct>("GET", `products/${id}`, {}, queryParams);
   };
 
+  /**
+   * Creates a new product. At minimum, `name` and `uom` (unit of measure) are required.
+   * Variants can be included inline during creation.
+   *
+   * @example
+   * ```ts
+   * const product = await client.products.create({ name: "Widget", uom: "pcs" });
+   * ```
+   */
   create = async (payload: createProductSchemaType): Promise<KatanaCreateProductResponse> => {
     return this.client.request<KatanaCreateProductResponse>("POST", "products", {
       body: JSON.stringify(payload),
     });
   };
 
+  /**
+   * Updates the specified product by setting the values of the parameters passed.
+   * Any parameters not provided will be left unchanged.
+   *
+   * @example
+   * ```ts
+   * const product = await client.products.update({ id: 42, name: "Updated Widget" });
+   * ```
+   */
   update = async (payload: updateProductSchemaType): Promise<KatanaProduct> => {
     const { id, ...body } = payload;
     return this.client.request<KatanaProduct>("PATCH", `products/${id}`, {

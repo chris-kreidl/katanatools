@@ -3,9 +3,27 @@ import { buildQueryParams } from "../katanaClient";
 import type { listSalesOrderRowsSchemaType } from "../schemas";
 import type { KatanaListSalesOrderRowsResponse } from "../types";
 
+/**
+ * Sales order rows are individual line items within a {@link SalesOrdersResource | sales order}.
+ * Each row references a variant, quantity, price, location, and tax rate. Rows also
+ * track product availability and can be linked to a manufacturing order for
+ * make-to-order fulfillment.
+ *
+ * @see {@link https://developer.katanamrp.com/reference/list-sales-order-rows | Katana API — Sales Order Rows}
+ */
 export class SalesOrderRowsResource {
   constructor(private client: KatanaClient) {}
 
+  /**
+   * Returns a paginated list of sales order rows, optionally filtered by parent
+   * sales order, variant, location, tax rate, linked manufacturing order, or
+   * product availability status.
+   *
+   * @example
+   * ```ts
+   * const { data } = await client.salesOrderRows.list({ sales_order_ids: [42] });
+   * ```
+   */
   list = async (
     params: listSalesOrderRowsSchemaType,
   ): Promise<KatanaListSalesOrderRowsResponse> => {

@@ -3,9 +3,27 @@ import { buildQueryParams } from "../katanaClient";
 import type { listInventorySchemaType } from "../schemas";
 import type { KatanaListInventoryResponse } from "../types";
 
+/**
+ * Inventory records represent current stock levels for a variant at a specific
+ * location. Each record includes on-hand quantity, committed quantity, and expected
+ * quantity. Use {@link InventoryMovementsResource | inventory movements} to see the
+ * history of stock changes.
+ *
+ * @see {@link https://developer.katanamrp.com/reference/list-inventory | Katana API — Inventory}
+ */
 export class InventoryResource {
   constructor(private client: KatanaClient) {}
 
+  /**
+   * Returns a paginated list of inventory records, optionally filtered by variant,
+   * location, or archived status. Use the `extend` parameter to include related
+   * variant or location details.
+   *
+   * @example
+   * ```ts
+   * const { data } = await client.inventory.list({ location_id: 1 });
+   * ```
+   */
   list = async (params: listInventorySchemaType): Promise<KatanaListInventoryResponse> => {
     const queryParams = buildQueryParams(params, {
       variant_id: "numArray",

@@ -3,9 +3,25 @@ import { buildQueryParams } from "../katanaClient";
 import type { listPurchaseOrdersSchemaType, createPurchaseOrderSchemaType } from "../schemas";
 import type { KatanaListPurchaseOrdersResponse, KatanaCreatePurchaseOrderResponse } from "../types";
 
+/**
+ * Purchase orders (POs) track orders placed with suppliers for materials or products.
+ * Each PO references a supplier, a location for receiving, and one or more line items.
+ * POs carry status, billing, and currency information.
+ *
+ * @see {@link https://developer.katanamrp.com/reference/list-purchase-orders | Katana API — Purchase Orders}
+ */
 export class PurchaseOrdersResource {
   constructor(private client: KatanaClient) {}
 
+  /**
+   * Returns a paginated list of purchase orders, optionally filtered by order number,
+   * status, billing status, currency, location, or supplier.
+   *
+   * @example
+   * ```ts
+   * const { data } = await client.purchaseOrders.list({ status: "OPEN" });
+   * ```
+   */
   list = async (
     params: listPurchaseOrdersSchemaType,
   ): Promise<KatanaListPurchaseOrdersResponse> => {
@@ -36,6 +52,19 @@ export class PurchaseOrdersResource {
     );
   };
 
+  /**
+   * Creates a new purchase order. Requires at minimum a `supplier_id` and
+   * `location_id`. Line items can be included inline during creation.
+   *
+   * @example
+   * ```ts
+   * const po = await client.purchaseOrders.create({
+   *   supplier_id: 5,
+   *   location_id: 1,
+   *   currency: "USD",
+   * });
+   * ```
+   */
   create = async (
     payload: createPurchaseOrderSchemaType,
   ): Promise<KatanaCreatePurchaseOrderResponse> => {
