@@ -1,5 +1,11 @@
 # @ckreidl/katana-client
 
+## 1.0.0
+
+### Major Changes
+
+- [#17](https://github.com/chris-kreidl/katanatools/pull/17) [`f52243c`](https://github.com/chris-kreidl/katanatools/commit/f52243c3f6f3cc6b2b0460e93ac59ada0f17e2de) Thanks [@chris-kreidl](https://github.com/chris-kreidl)! - Refactor client API to use resource namespaces (e.g. `client.products.list()` instead of `client.listProducts()`)
+
 ## 0.3.0
 
 ### Minor Changes
