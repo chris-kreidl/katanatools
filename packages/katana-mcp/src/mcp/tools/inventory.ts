@@ -11,7 +11,7 @@ export function registerInventoryTools(server: McpServer, katanaClient: KatanaCl
     },
     async (params) => {
       try {
-        const response = await katanaClient.listInventory(params);
+        const response = await katanaClient.inventory.list(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };

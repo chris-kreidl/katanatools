@@ -11,7 +11,7 @@ export function registerDemandForecastTools(server: McpServer, katanaClient: Kat
     },
     async (params) => {
       try {
-        const response = await katanaClient.getDemandForecasts(params);
+        const response = await katanaClient.demandForecasts.get(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };

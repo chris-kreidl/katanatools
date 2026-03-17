@@ -18,7 +18,7 @@ export function registerManufacturingOrderTools(server: McpServer, katanaClient:
     },
     async (params) => {
       try {
-        const response = await katanaClient.listManufacturingOrders(params);
+        const response = await katanaClient.manufacturingOrders.list(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
@@ -35,7 +35,7 @@ export function registerManufacturingOrderTools(server: McpServer, katanaClient:
     },
     async (params) => {
       try {
-        const response = await katanaClient.getManufacturingOrder(params);
+        const response = await katanaClient.manufacturingOrders.get(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
@@ -52,7 +52,7 @@ export function registerManufacturingOrderTools(server: McpServer, katanaClient:
     },
     async (params) => {
       try {
-        const response = await katanaClient.createManufacturingOrder(params);
+        const response = await katanaClient.manufacturingOrders.create(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
@@ -69,7 +69,7 @@ export function registerManufacturingOrderTools(server: McpServer, katanaClient:
     },
     async (params) => {
       try {
-        const response = await katanaClient.updateManufacturingOrder(params);
+        const response = await katanaClient.manufacturingOrders.update(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
@@ -86,7 +86,7 @@ export function registerManufacturingOrderTools(server: McpServer, katanaClient:
     },
     async (params) => {
       try {
-        const response = await katanaClient.makeToOrderManufacturingOrder(params);
+        const response = await katanaClient.manufacturingOrders.makeToOrder(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
@@ -103,7 +103,7 @@ export function registerManufacturingOrderTools(server: McpServer, katanaClient:
     },
     async (params) => {
       try {
-        await katanaClient.unlinkManufacturingOrder(params);
+        await katanaClient.manufacturingOrders.unlink(params);
         return {
           content: [{ type: "text", text: "Manufacturing order unlinked successfully" }],
         };

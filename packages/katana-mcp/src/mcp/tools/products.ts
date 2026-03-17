@@ -16,7 +16,7 @@ export function registerProductTools(server: McpServer, katanaClient: KatanaClie
     },
     async (params) => {
       try {
-        const response = await katanaClient.listProducts(params);
+        const response = await katanaClient.products.list(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
@@ -33,7 +33,7 @@ export function registerProductTools(server: McpServer, katanaClient: KatanaClie
     },
     async (params) => {
       try {
-        const response = await katanaClient.getProduct(params);
+        const response = await katanaClient.products.get(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
@@ -50,7 +50,7 @@ export function registerProductTools(server: McpServer, katanaClient: KatanaClie
     },
     async (params) => {
       try {
-        const response = await katanaClient.createProduct(params);
+        const response = await katanaClient.products.create(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
@@ -67,7 +67,7 @@ export function registerProductTools(server: McpServer, katanaClient: KatanaClie
     },
     async (params) => {
       try {
-        const response = await katanaClient.updateProduct(params);
+        const response = await katanaClient.products.update(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };

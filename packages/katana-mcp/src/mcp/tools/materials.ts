@@ -11,7 +11,7 @@ export function registerMaterialTools(server: McpServer, katanaClient: KatanaCli
     },
     async (params) => {
       try {
-        const response = await katanaClient.listMaterials(params);
+        const response = await katanaClient.materials.list(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };

@@ -16,7 +16,7 @@ export function registerVariantTools(server: McpServer, katanaClient: KatanaClie
     },
     async (params) => {
       try {
-        const response = await katanaClient.listVariants(params);
+        const response = await katanaClient.variants.list(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
@@ -33,7 +33,7 @@ export function registerVariantTools(server: McpServer, katanaClient: KatanaClie
     },
     async (params) => {
       try {
-        const response = await katanaClient.getVariant(params);
+        const response = await katanaClient.variants.get(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
@@ -50,7 +50,7 @@ export function registerVariantTools(server: McpServer, katanaClient: KatanaClie
     },
     async (params) => {
       try {
-        const response = await katanaClient.createVariant(params);
+        const response = await katanaClient.variants.create(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
@@ -67,7 +67,7 @@ export function registerVariantTools(server: McpServer, katanaClient: KatanaClie
     },
     async (params) => {
       try {
-        const response = await katanaClient.updateVariant(params);
+        const response = await katanaClient.variants.update(params);
         return {
           content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
         };
