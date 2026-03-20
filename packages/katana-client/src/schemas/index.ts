@@ -84,3 +84,17 @@ export type {
   updatePriceListRowSchemaType,
   deletePriceListRowSchemaType,
 } from "./priceListRows";
+export {
+  listPriceListCustomersSchema,
+  getPriceListCustomerSchema,
+  createPriceListCustomersSchema,
+  updatePriceListCustomerSchema,
+  deletePriceListCustomerSchema,
+} from "./priceListCustomers";
+export type {
+  listPriceListCustomersSchemaType,
+  getPriceListCustomerSchemaType,
+  createPriceListCustomersSchemaType,
+  updatePriceListCustomerSchemaType,
+  deletePriceListCustomerSchemaType,
+} from "./priceListCustomers";

@@ -15,6 +15,7 @@ import { registerBomRowTools } from "./bomRows";
 import { registerVariantTools } from "./variants";
 import { registerPriceListTools } from "./priceLists";
 import { registerPriceListRowTools } from "./priceListRows";
+import { registerPriceListCustomerTools } from "./priceListCustomers";
 
 export function registerTools(server: McpServer, katanaClient: KatanaClient) {
   registerProductTools(server, katanaClient);
@@ -32,4 +33,5 @@ export function registerTools(server: McpServer, katanaClient: KatanaClient) {
   registerVariantTools(server, katanaClient);
   registerPriceListTools(server, katanaClient);
   registerPriceListRowTools(server, katanaClient);
+  registerPriceListCustomerTools(server, katanaClient);
 }

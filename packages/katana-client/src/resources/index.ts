@@ -13,3 +13,4 @@ export { InventoryMovementsResource } from "./inventoryMovements";
 export { BomRowsResource } from "./bomRows";
 export { PriceListsResource } from "./priceLists";
 export { PriceListRowsResource } from "./priceListRows";
+export { PriceListCustomersResource } from "./priceListCustomers";

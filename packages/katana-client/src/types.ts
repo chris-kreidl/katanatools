@@ -530,6 +530,20 @@ export interface KatanaListPriceListRowsResponse {
 
 export type KatanaCreatePriceListRowsResponse = Array<KatanaPriceListRow>;
 
+export interface KatanaPriceListCustomer {
+  id: number;
+  price_list_id?: number;
+  customer_id?: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface KatanaListPriceListCustomersResponse {
+  data: Array<KatanaPriceListCustomer>;
+}
+
+export type KatanaCreatePriceListCustomersResponse = Array<KatanaPriceListCustomer>;
+
 export interface KatanaVariant {
   id: number;
   sku?: string;
