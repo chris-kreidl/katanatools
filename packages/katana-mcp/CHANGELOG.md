@@ -1,5 +1,19 @@
 # @ckreidl/katana-mcp
 
+## 1.1.0
+
+### Minor Changes
+
+- [#26](https://github.com/chris-kreidl/katanatools/pull/26) [`bb4d6f9`](https://github.com/chris-kreidl/katanatools/commit/bb4d6f9836afa74e664f7ca8f4ba85f05d71b7f2) Thanks [@chris-kreidl](https://github.com/chris-kreidl)! - Add batch endpoints: createBatch, listBatchStocks, and updateBatch
+
+- [#25](https://github.com/chris-kreidl/katanatools/pull/25) [`e8689b2`](https://github.com/chris-kreidl/katanatools/commit/e8689b23b868d56b29de1810dd255d81268ff6bc) Thanks [@chris-kreidl](https://github.com/chris-kreidl)! - Add get, create, update, and delete material endpoints to katana-client; add getMaterial, createMaterial, and updateMaterial MCP tools
+
+- [#23](https://github.com/chris-kreidl/katanatools/pull/23) [`08842e0`](https://github.com/chris-kreidl/katanatools/commit/08842e04c2e88f4217eaeb90972de19ea48c6699) Thanks [@chris-kreidl](https://github.com/chris-kreidl)! - Add manufacturing order recipe row endpoints
+
+- [#21](https://github.com/chris-kreidl/katanatools/pull/21) [`4668d1e`](https://github.com/chris-kreidl/katanatools/commit/4668d1e4d3276615796aff018c742a14d3acf711) Thanks [@chris-kreidl](https://github.com/chris-kreidl)! - Add price list, price list row, and price list customer endpoints
+
+- [#24](https://github.com/chris-kreidl/katanatools/pull/24) [`d750649`](https://github.com/chris-kreidl/katanatools/commit/d75064967522dd05d997631d205e3422ff355453) Thanks [@chris-kreidl](https://github.com/chris-kreidl)! - Add get, create, update, delete, and returnable items endpoints for sales orders
+
 ## 1.0.0
 
 ### Major Changes
