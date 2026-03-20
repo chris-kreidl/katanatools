@@ -197,6 +197,33 @@ export interface KatanaListManufacturingOrdersResponse {
   data: Array<KatanaManufacturingOrder>;
 }
 
+export interface KatanaMoRecipeRowBatchTransaction {
+  batch_id?: number;
+  quantity?: number;
+}
+
+export interface KatanaMoRecipeRow {
+  id: number;
+  manufacturing_order_id?: number;
+  variant_id?: number;
+  notes?: string;
+  planned_quantity_per_unit?: number;
+  total_actual_quantity?: number;
+  ingredient_availability?: string;
+  ingredient_expected_date?: string;
+  batch_transactions?: Array<KatanaMoRecipeRowBatchTransaction>;
+  cost?: number;
+  created_at?: string;
+  updated_at?: string;
+  deleted_at?: string | null;
+}
+
+export interface KatanaListMoRecipeRowsResponse {
+  data: Array<KatanaMoRecipeRow>;
+}
+
+export type KatanaCreateMoRecipeRowResponse = KatanaMoRecipeRow;
+
 export type KatanaCreateManufacturingOrderResponse = KatanaManufacturingOrder;
 
 export interface KatanaListSuppliersResponse {
