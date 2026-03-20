@@ -85,7 +85,7 @@ export type createSalesOrderSchemaType = z.infer<typeof createSalesOrderSchema>;
 export const updateSalesOrderSchema = z
   .object({
     id: z.number().int().positive(),
-    order_no: z.string().min(1).optional(),
+    order_no: z.string().optional(),
     customer_id: z.number().int().positive().optional(),
     order_created_date: z.string().optional(),
     delivery_date: z.string().optional(),

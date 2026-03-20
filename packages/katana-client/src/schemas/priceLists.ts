@@ -15,14 +15,14 @@ export const getPriceListSchema = z.object({
 export type getPriceListSchemaType = z.infer<typeof getPriceListSchema>;
 
 export const createPriceListSchema = z.object({
-  name: z.string().min(1).max(100),
+  name: z.string(),
 });
 export type createPriceListSchemaType = z.infer<typeof createPriceListSchema>;
 
 export const updatePriceListSchema = z
   .object({
     id: z.number().int().positive(),
-    name: z.string().min(1).max(100).optional(),
+    name: z.string().optional(),
     is_active: z.boolean().optional(),
   })
   .refine(

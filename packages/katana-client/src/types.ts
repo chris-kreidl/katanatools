@@ -154,6 +154,8 @@ export interface KatanaListMaterialsResponse {
   data: Array<KatanaMaterial>;
 }
 
+export type KatanaCreateMaterialResponse = KatanaMaterial;
+
 export interface KatanaManufacturingOrderSerialNumber {
   id: number;
   transaction_id?: string;

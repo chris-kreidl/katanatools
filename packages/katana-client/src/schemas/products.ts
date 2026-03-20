@@ -43,41 +43,41 @@ const configAttributeSchema = z.object({
 });
 
 const customFieldSchema = z.object({
-  field_name: z.string().max(40),
-  field_value: z.string().max(100),
+  field_name: z.string(),
+  field_value: z.string(),
 });
 
 const productVariantSchema = z.object({
   sku: z.string().optional(),
-  purchase_price: z.number().min(0).max(100000000000).nullable().optional(),
-  sales_price: z.number().min(0).max(100000000000).nullable().optional(),
+  purchase_price: z.number().nullable().optional(),
+  sales_price: z.number().nullable().optional(),
   config_attributes: z.array(configAttributeSchema).min(1).optional(),
-  internal_barcode: z.string().min(3).max(40).optional(),
-  registered_barcode: z.string().max(120).optional(),
-  supplier_item_codes: z.array(z.string().min(1)).min(1).optional(),
-  custom_fields: z.array(customFieldSchema).max(3).optional(),
+  internal_barcode: z.string().optional(),
+  registered_barcode: z.string().optional(),
+  supplier_item_codes: z.array(z.string()).min(1).optional(),
+  custom_fields: z.array(customFieldSchema).optional(),
 });
 
 export const createProductSchema = z.object({
   name: z.string(),
   variants: z.array(productVariantSchema).min(1),
-  uom: z.string().max(7).optional(),
+  uom: z.string().optional(),
   category_name: z.string().optional(),
   is_sellable: z.boolean().optional(),
   is_producible: z.boolean().optional(),
   is_purchasable: z.boolean().optional(),
   is_auto_assembly: z.boolean().optional(),
-  default_supplier_id: z.number().int().positive().max(2147483647).optional(),
+  default_supplier_id: z.number().int().positive().optional(),
   additional_info: z.string().optional(),
   batch_tracked: z.boolean().optional(),
   serial_tracked: z.boolean().optional(),
   operations_in_sequence: z.boolean().optional(),
-  purchase_uom: z.string().max(7).optional(),
-  purchase_uom_conversion_rate: z.number().min(0).max(1000000000000).optional(),
-  lead_time: z.number().int().min(0).max(999).nullable().optional(),
-  minimum_order_quantity: z.number().min(0).max(999999999).nullable().optional(),
+  purchase_uom: z.string().optional(),
+  purchase_uom_conversion_rate: z.number().optional(),
+  lead_time: z.number().int().nullable().optional(),
+  minimum_order_quantity: z.number().nullable().optional(),
   configs: z.array(configSchema).min(1).optional(),
-  custom_field_collection_id: z.number().int().positive().max(2147483647).nullable().optional(),
+  custom_field_collection_id: z.number().int().positive().nullable().optional(),
 });
 export type createProductSchemaType = z.infer<typeof createProductSchema>;
 
@@ -91,22 +91,22 @@ export const updateProductSchema = z
   .object({
     id: z.number().int().positive(),
     name: z.string().optional(),
-    uom: z.string().max(7).optional(),
+    uom: z.string().optional(),
     category_name: z.string().optional(),
     is_sellable: z.boolean().optional(),
     is_producible: z.boolean().optional(),
     is_purchasable: z.boolean().optional(),
     is_auto_assembly: z.boolean().optional(),
     is_archived: z.boolean().optional(),
-    default_supplier_id: z.number().int().positive().max(2147483647).optional(),
+    default_supplier_id: z.number().int().positive().optional(),
     additional_info: z.string().optional(),
     batch_tracked: z.boolean().optional(),
     serial_tracked: z.boolean().optional(),
     operations_in_sequence: z.boolean().optional(),
-    purchase_uom: z.string().max(7).optional(),
-    purchase_uom_conversion_rate: z.number().min(0).max(1000000000000).optional(),
+    purchase_uom: z.string().optional(),
+    purchase_uom_conversion_rate: z.number().optional(),
     configs: z.array(updateConfigSchema).min(1).optional(),
-    custom_field_collection_id: z.number().int().positive().max(2147483647).nullable().optional(),
+    custom_field_collection_id: z.number().int().positive().nullable().optional(),
   })
   .refine(
     (data) =>

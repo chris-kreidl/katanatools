@@ -24,10 +24,10 @@ export type listPurchaseOrdersSchemaType = z.infer<typeof listPurchaseOrdersSche
 const purchaseOrderRowSchema = z.object({
   quantity: z.number(),
   variant_id: z.number().int().positive(),
-  price_per_unit: z.number().min(0),
+  price_per_unit: z.number(),
   tax_rate_id: z.number().int().positive().optional(),
-  purchase_uom_conversion_rate: z.number().min(0).optional(),
-  purchase_uom: z.string().max(7).optional(),
+  purchase_uom_conversion_rate: z.number().optional(),
+  purchase_uom: z.string().optional(),
   arrival_date: z.string().optional(),
 });
 
