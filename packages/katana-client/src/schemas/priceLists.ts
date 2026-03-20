@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const listPriceListsSchema = z.object({
-  ids: z.number().array().optional(),
+  ids: z.number().int().positive().array().optional(),
   name: z.string().optional(),
   is_active: z.boolean().optional(),
   limit: z.string().optional(),

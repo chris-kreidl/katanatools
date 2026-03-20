@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const listSuppliersSchema = z.object({
   name: z.string().optional(),
-  ids: z.number().array().optional(),
+  ids: z.number().int().positive().array().optional(),
   email: z.string().optional(),
   phone: z.string().optional(),
   include_deleted: z.boolean().optional(),

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const listPurchaseOrdersSchema = z.object({
-  ids: z.number().array().optional(),
+  ids: z.number().int().positive().array().optional(),
   order_no: z.string().optional(),
   entity_type: z.enum(["regular", "outsourced"]).optional(),
   status: z.enum(["NOT_RECEIVED", "PARTIALLY_RECEIVED", "RECEIVED"]).optional(),

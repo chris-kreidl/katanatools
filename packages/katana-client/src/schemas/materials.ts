@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const listMaterialsSchema = z.object({
-  ids: z.number().array().optional(),
+  ids: z.number().int().positive().array().optional(),
   name: z.string().optional(),
   uom: z.string().optional(),
   default_supplier_id: z.number().optional(),

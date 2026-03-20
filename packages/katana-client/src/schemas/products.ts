@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const listProductsSchema = z.object({
-  ids: z.number().array().optional(),
+  ids: z.number().int().positive().array().optional(),
   name: z.string().optional(),
   uom: z.string().optional(),
   is_sellable: z.boolean().optional(),

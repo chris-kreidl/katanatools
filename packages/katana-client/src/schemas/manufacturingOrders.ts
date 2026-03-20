@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const listManufacturingOrdersSchema = z.object({
-  ids: z.number().array().optional(),
+  ids: z.number().int().positive().array().optional(),
   status: z.enum(["NOT_STARTED", "BLOCKED", "IN_PROGRESS", "DONE"]).optional(),
   order_no: z.string().optional(),
   location_id: z.number().optional(),

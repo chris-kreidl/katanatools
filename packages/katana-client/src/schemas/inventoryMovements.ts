@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const listInventoryMovementsSchema = z.object({
-  ids: z.number().array().optional(),
-  variant_ids: z.number().array().optional(),
+  ids: z.number().int().positive().array().optional(),
+  variant_ids: z.number().int().positive().array().optional(),
   location_id: z.number().optional(),
   resource_type: z
     .enum([

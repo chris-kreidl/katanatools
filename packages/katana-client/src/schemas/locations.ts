@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const listLocationsSchema = z.object({
-  ids: z.number().array().optional(),
+  ids: z.number().int().positive().array().optional(),
   name: z.string().optional(),
   legal_name: z.string().optional(),
   address_id: z.number().optional(),
