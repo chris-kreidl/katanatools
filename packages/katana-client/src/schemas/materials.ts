@@ -4,7 +4,7 @@ export const listMaterialsSchema = z.object({
   ids: z.number().int().positive().array().optional(),
   name: z.string().optional(),
   uom: z.string().optional(),
-  default_supplier_id: z.number().optional(),
+  default_supplier_id: z.number().int().positive().optional(),
   is_sellable: z.boolean().optional(),
   batch_tracked: z.boolean().optional(),
   purchase_uom: z.string().optional(),

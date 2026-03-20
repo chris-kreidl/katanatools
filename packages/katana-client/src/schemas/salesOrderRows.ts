@@ -3,10 +3,10 @@ import { z } from "zod";
 export const listSalesOrderRowsSchema = z.object({
   ids: z.number().int().positive().array().optional(),
   sales_order_ids: z.number().int().positive().array().optional(),
-  variant_id: z.number().optional(),
-  location_id: z.number().optional(),
-  tax_rate_id: z.number().optional(),
-  linked_manufacturing_order_id: z.number().optional(),
+  variant_id: z.number().int().positive().optional(),
+  location_id: z.number().int().positive().optional(),
+  tax_rate_id: z.number().int().positive().optional(),
+  linked_manufacturing_order_id: z.number().int().positive().optional(),
   product_availability: z
     .enum(["IN_STOCK", "EXPECTED", "PICKED", "NOT_AVAILABLE", "NOT_APPLICABLE"])
     .optional(),

@@ -8,7 +8,7 @@ export const listProductsSchema = z.object({
   is_producible: z.boolean().optional(),
   is_purchasable: z.boolean().optional(),
   is_auto_assembly: z.boolean().optional(),
-  default_supplier_id: z.number().optional(),
+  default_supplier_id: z.number().int().positive().optional(),
   batch_tracked: z.boolean().optional(),
   serial_tracked: z.boolean().optional(),
   operations_in_sequence: z.boolean().optional(),
