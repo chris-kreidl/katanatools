@@ -71,6 +71,9 @@ describe("registerTools", () => {
         "getPriceListCustomer",
         "createPriceListCustomers",
         "updatePriceListCustomer",
+        "createBatch",
+        "listBatchStocks",
+        "updateBatch",
       ].sort(),
     );
   });

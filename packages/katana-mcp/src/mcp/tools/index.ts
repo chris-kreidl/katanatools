@@ -17,6 +17,7 @@ import { registerPriceListTools } from "./priceLists";
 import { registerPriceListRowTools } from "./priceListRows";
 import { registerPriceListCustomerTools } from "./priceListCustomers";
 import { registerMoRecipeRowTools } from "./moRecipeRows";
+import { registerBatchTools } from "./batches";
 
 export function registerTools(server: McpServer, katanaClient: KatanaClient) {
   registerProductTools(server, katanaClient);
@@ -36,4 +37,5 @@ export function registerTools(server: McpServer, katanaClient: KatanaClient) {
   registerPriceListRowTools(server, katanaClient);
   registerPriceListCustomerTools(server, katanaClient);
   registerMoRecipeRowTools(server, katanaClient);
+  registerBatchTools(server, katanaClient);
 }
