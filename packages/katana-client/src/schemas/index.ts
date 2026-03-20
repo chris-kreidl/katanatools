@@ -40,8 +40,20 @@ export type {
 } from "./manufacturingOrders";
 export { listPurchaseOrdersSchema, createPurchaseOrderSchema } from "./purchaseOrders";
 export type { listPurchaseOrdersSchemaType, createPurchaseOrderSchemaType } from "./purchaseOrders";
-export { listMaterialsSchema } from "./materials";
-export type { listMaterialsSchemaType } from "./materials";
+export {
+  listMaterialsSchema,
+  getMaterialSchema,
+  createMaterialSchema,
+  updateMaterialSchema,
+  deleteMaterialSchema,
+} from "./materials";
+export type {
+  listMaterialsSchemaType,
+  getMaterialSchemaType,
+  createMaterialSchemaType,
+  updateMaterialSchemaType,
+  deleteMaterialSchemaType,
+} from "./materials";
 export { listSuppliersSchema } from "./suppliers";
 export type { listSuppliersSchemaType } from "./suppliers";
 export {
