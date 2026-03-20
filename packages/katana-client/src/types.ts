@@ -514,6 +514,22 @@ export interface KatanaListPriceListsResponse {
 
 export type KatanaCreatePriceListResponse = KatanaPriceList;
 
+export interface KatanaPriceListRow {
+  id: number;
+  price_list_id?: number;
+  variant_id?: number;
+  adjustment_method?: "fixed" | "percentage" | "markup";
+  amount?: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface KatanaListPriceListRowsResponse {
+  data: Array<KatanaPriceListRow>;
+}
+
+export type KatanaCreatePriceListRowsResponse = Array<KatanaPriceListRow>;
+
 export interface KatanaVariant {
   id: number;
   sku?: string;

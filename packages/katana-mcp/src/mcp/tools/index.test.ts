@@ -52,6 +52,10 @@ describe("registerTools", () => {
         "getPriceList",
         "createPriceList",
         "updatePriceList",
+        "listPriceListRows",
+        "getPriceListRow",
+        "createPriceListRows",
+        "updatePriceListRow",
       ].sort(),
     );
   });

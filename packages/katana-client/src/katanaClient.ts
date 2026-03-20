@@ -14,6 +14,7 @@ import { InventoryResource } from "./resources/inventory";
 import { InventoryMovementsResource } from "./resources/inventoryMovements";
 import { BomRowsResource } from "./resources/bomRows";
 import { PriceListsResource } from "./resources/priceLists";
+import { PriceListRowsResource } from "./resources/priceListRows";
 
 export type ParamType = "string" | "number" | "boolean" | "numArray" | "strArray";
 
@@ -69,6 +70,7 @@ export class KatanaClient {
   readonly inventoryMovements: InventoryMovementsResource;
   readonly bomRows: BomRowsResource;
   readonly priceLists: PriceListsResource;
+  readonly priceListRows: PriceListRowsResource;
 
   constructor({
     requestsPerSecond,
@@ -100,6 +102,7 @@ export class KatanaClient {
     this.inventoryMovements = new InventoryMovementsResource(this);
     this.bomRows = new BomRowsResource(this);
     this.priceLists = new PriceListsResource(this);
+    this.priceListRows = new PriceListRowsResource(this);
   }
 
   initialize() {
