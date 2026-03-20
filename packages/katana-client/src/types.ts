@@ -500,6 +500,50 @@ export interface KatanaListBomRowsResponse {
   data: Array<KatanaBomRow>;
 }
 
+export interface KatanaPriceList {
+  id: number;
+  name?: string;
+  is_active?: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface KatanaListPriceListsResponse {
+  data: Array<KatanaPriceList>;
+}
+
+export type KatanaCreatePriceListResponse = KatanaPriceList;
+
+export interface KatanaPriceListRow {
+  id: number;
+  price_list_id?: number;
+  variant_id?: number;
+  adjustment_method?: "fixed" | "percentage" | "markup";
+  amount?: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface KatanaListPriceListRowsResponse {
+  data: Array<KatanaPriceListRow>;
+}
+
+export type KatanaCreatePriceListRowsResponse = Array<KatanaPriceListRow>;
+
+export interface KatanaPriceListCustomer {
+  id: number;
+  price_list_id?: number;
+  customer_id?: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface KatanaListPriceListCustomersResponse {
+  data: Array<KatanaPriceListCustomer>;
+}
+
+export type KatanaCreatePriceListCustomersResponse = Array<KatanaPriceListCustomer>;
+
 export interface KatanaVariant {
   id: number;
   sku?: string;

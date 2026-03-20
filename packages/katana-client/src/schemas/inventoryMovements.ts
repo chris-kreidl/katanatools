@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 export const listInventoryMovementsSchema = z.object({
-  ids: z.number().array().optional(),
-  variant_ids: z.number().array().optional(),
-  location_id: z.number().optional(),
+  ids: z.number().int().positive().array().optional(),
+  variant_ids: z.number().int().positive().array().optional(),
+  location_id: z.number().int().positive().optional(),
   resource_type: z
     .enum([
       "PurchaseOrderRow",
@@ -16,9 +16,9 @@ export const listInventoryMovementsSchema = z.object({
       "SystemGenerated",
     ])
     .optional(),
-  resource_id: z.number().optional(),
+  resource_id: z.number().int().positive().optional(),
   caused_by_order_no: z.string().optional(),
-  caused_by_resource_id: z.number().optional(),
+  caused_by_resource_id: z.number().int().positive().optional(),
   limit: z.string().optional(),
   page: z.string().optional(),
   created_at_min: z.string().optional(),

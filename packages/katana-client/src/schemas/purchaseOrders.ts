@@ -1,15 +1,15 @@
 import { z } from "zod";
 
 export const listPurchaseOrdersSchema = z.object({
-  ids: z.number().array().optional(),
+  ids: z.number().int().positive().array().optional(),
   order_no: z.string().optional(),
   entity_type: z.enum(["regular", "outsourced"]).optional(),
   status: z.enum(["NOT_RECEIVED", "PARTIALLY_RECEIVED", "RECEIVED"]).optional(),
   billing_status: z.enum(["BILLED", "NOT_BILLED", "PARTIALLY_BILLED"]).optional(),
   currency: z.string().optional(),
-  location_id: z.number().optional(),
-  tracking_location_id: z.number().optional(),
-  supplier_id: z.number().optional(),
+  location_id: z.number().int().positive().optional(),
+  tracking_location_id: z.number().int().positive().optional(),
+  supplier_id: z.number().int().positive().optional(),
   extend: z.array(z.enum(["supplier"])).optional(),
   include_deleted: z.boolean().optional(),
   limit: z.string().optional(),
@@ -23,9 +23,9 @@ export type listPurchaseOrdersSchemaType = z.infer<typeof listPurchaseOrdersSche
 
 const purchaseOrderRowSchema = z.object({
   quantity: z.number(),
-  variant_id: z.number(),
+  variant_id: z.number().int().positive(),
   price_per_unit: z.number().min(0),
-  tax_rate_id: z.number().optional(),
+  tax_rate_id: z.number().int().positive().optional(),
   purchase_uom_conversion_rate: z.number().min(0).optional(),
   purchase_uom: z.string().max(7).optional(),
   arrival_date: z.string().optional(),
@@ -33,15 +33,15 @@ const purchaseOrderRowSchema = z.object({
 
 export const createPurchaseOrderSchema = z.object({
   order_no: z.string(),
-  supplier_id: z.number(),
-  location_id: z.number(),
+  supplier_id: z.number().int().positive(),
+  location_id: z.number().int().positive(),
   purchase_order_rows: z.array(purchaseOrderRowSchema).min(1),
   entity_type: z.enum(["regular", "outsourced"]).optional(),
   currency: z.string().optional(),
   status: z.enum(["NOT_RECEIVED"]).optional(),
   expected_arrival_date: z.string().optional(),
   order_created_date: z.string().optional(),
-  tracking_location_id: z.number().optional(),
+  tracking_location_id: z.number().int().positive().optional(),
   additional_info: z.string().optional(),
 });
 export type createPurchaseOrderSchemaType = z.infer<typeof createPurchaseOrderSchema>;

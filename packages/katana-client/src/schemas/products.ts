@@ -1,14 +1,14 @@
 import { z } from "zod";
 
 export const listProductsSchema = z.object({
-  ids: z.number().array().optional(),
+  ids: z.number().int().positive().array().optional(),
   name: z.string().optional(),
   uom: z.string().optional(),
   is_sellable: z.boolean().optional(),
   is_producible: z.boolean().optional(),
   is_purchasable: z.boolean().optional(),
   is_auto_assembly: z.boolean().optional(),
-  default_supplier_id: z.number().optional(),
+  default_supplier_id: z.number().int().positive().optional(),
   batch_tracked: z.boolean().optional(),
   serial_tracked: z.boolean().optional(),
   operations_in_sequence: z.boolean().optional(),

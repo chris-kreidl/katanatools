@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 export const listSalesOrdersSchema = z.object({
-  ids: z.number().array().optional(),
+  ids: z.number().int().positive().array().optional(),
   order_no: z.string().optional(),
   source: z.string().optional(),
-  location_id: z.number().optional(),
-  customer_id: z.number().optional(),
+  location_id: z.number().int().positive().optional(),
+  customer_id: z.number().int().positive().optional(),
   status: z.string().optional(),
   currency: z.string().optional(),
   invoicing_status: z.string().optional(),

@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const listInventorySchema = z.object({
-  location_id: z.number().optional(),
-  variant_id: z.number().array().optional(),
+  location_id: z.number().int().positive().optional(),
+  variant_id: z.number().int().positive().array().optional(),
   include_archived: z.boolean().optional(),
   extend: z.array(z.enum(["variant", "location"])).optional(),
   limit: z.string().optional(),

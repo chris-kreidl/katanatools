@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 export const listManufacturingOrdersSchema = z.object({
-  ids: z.number().array().optional(),
+  ids: z.number().int().positive().array().optional(),
   status: z.enum(["NOT_STARTED", "BLOCKED", "IN_PROGRESS", "DONE"]).optional(),
   order_no: z.string().optional(),
-  location_id: z.number().optional(),
+  location_id: z.number().int().positive().optional(),
   is_linked_to_sales_order: z.boolean().optional(),
   include_deleted: z.boolean().optional(),
   limit: z.string().optional(),
