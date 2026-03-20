@@ -32,7 +32,7 @@ The table below shows which [Katana API](https://developer.katanamrp.com/referen
 | Material                                  |  x   |     |        |        |        |             |
 | Operator                                  |      |     |        |        |        |             |
 | Outsourced PO Recipe Row                  |      |     |        |        |        |             |
-| Price List                                |      |     |        |        |        |             |
+| Price List                                |  x   |  x  |   x    |   x    |        |             |
 | Price List Customers                      |      |     |        |        |        |             |
 | Price List Rows                           |      |     |        |        |        |             |
 | Product                                   |  x   |  x  |   x    |   x    |        |             |
