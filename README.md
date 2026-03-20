@@ -28,7 +28,7 @@ The table below shows which [Katana API](https://developer.katanamrp.com/referen
 | Manufacturing Order Operation             |      |     |        |        |        |             |
 | Manufacturing Order Production            |      |     |        |        |        |             |
 | Manufacturing Order Production Ingredient |      |     |        |        |        |             |
-| Manufacturing Order Recipe                |      |     |        |        |        |             |
+| Manufacturing Order Recipe                |  x   |  x  |   x    |   x    |   x    |             |
 | Material                                  |  x   |     |        |        |        |             |
 | Operator                                  |      |     |        |        |        |             |
 | Outsourced PO Recipe Row                  |      |     |        |        |        |             |
