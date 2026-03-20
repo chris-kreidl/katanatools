@@ -586,6 +586,34 @@ export interface KatanaListPriceListCustomersResponse {
 
 export type KatanaCreatePriceListCustomersResponse = Array<KatanaPriceListCustomer>;
 
+export interface KatanaBatch {
+  id: number;
+  batch_number?: string;
+  expiration_date?: string;
+  batch_created_date?: string;
+  variant_id?: number;
+  batch_barcode?: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export type KatanaCreateBatchResponse = KatanaBatch;
+
+export interface KatanaBatchStock {
+  batch_id?: number;
+  batch_number?: string;
+  batch_created_date?: string;
+  expiration_date?: string;
+  location_id?: number;
+  variant_id?: number;
+  quantity_in_stock?: string;
+  batch_barcode?: string;
+}
+
+export interface KatanaListBatchStocksResponse {
+  data: Array<KatanaBatchStock>;
+}
+
 export interface KatanaVariant {
   id: number;
   sku?: string;

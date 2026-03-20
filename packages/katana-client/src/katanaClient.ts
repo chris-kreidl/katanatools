@@ -17,6 +17,7 @@ import { PriceListsResource } from "./resources/priceLists";
 import { PriceListRowsResource } from "./resources/priceListRows";
 import { PriceListCustomersResource } from "./resources/priceListCustomers";
 import { MoRecipeRowsResource } from "./resources/moRecipeRows";
+import { BatchesResource } from "./resources/batches";
 
 export type ParamType = "string" | "number" | "boolean" | "numArray" | "strArray";
 
@@ -75,6 +76,7 @@ export class KatanaClient {
   readonly priceListRows: PriceListRowsResource;
   readonly priceListCustomers: PriceListCustomersResource;
   readonly moRecipeRows: MoRecipeRowsResource;
+  readonly batches: BatchesResource;
 
   constructor({
     requestsPerSecond,
@@ -109,6 +111,7 @@ export class KatanaClient {
     this.priceListRows = new PriceListRowsResource(this);
     this.priceListCustomers = new PriceListCustomersResource(this);
     this.moRecipeRows = new MoRecipeRowsResource(this);
+    this.batches = new BatchesResource(this);
   }
 
   initialize() {

@@ -14,7 +14,7 @@ The table below shows which [Katana API](https://developer.katanamrp.com/referen
 | Resource                                  | List | Get | Create | Update | Delete |    Other    |
 | ----------------------------------------- | :--: | :-: | :----: | :----: | :----: | :---------: |
 | Additional Costs                          |      |     |        |        |        |             |
-| Batch                                     |      |     |        |        |        |             |
+| Batch                                     |  x   |     |   x    |   x    |        |             |
 | BOM Row                                   |  x   |     |        |        |        |             |
 | Customer                                  |      |     |        |        |        |             |
 | Customer Address                          |      |     |        |        |        |             |
