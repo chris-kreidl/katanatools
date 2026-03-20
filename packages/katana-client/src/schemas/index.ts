@@ -44,8 +44,22 @@ export { listMaterialsSchema } from "./materials";
 export type { listMaterialsSchemaType } from "./materials";
 export { listSuppliersSchema } from "./suppliers";
 export type { listSuppliersSchemaType } from "./suppliers";
-export { listSalesOrdersSchema } from "./salesOrders";
-export type { listSalesOrdersSchemaType } from "./salesOrders";
+export {
+  listSalesOrdersSchema,
+  getSalesOrderSchema,
+  createSalesOrderSchema,
+  updateSalesOrderSchema,
+  deleteSalesOrderSchema,
+  getReturnableItemsSchema,
+} from "./salesOrders";
+export type {
+  listSalesOrdersSchemaType,
+  getSalesOrderSchemaType,
+  createSalesOrderSchemaType,
+  updateSalesOrderSchemaType,
+  deleteSalesOrderSchemaType,
+  getReturnableItemsSchemaType,
+} from "./salesOrders";
 export { getDemandForecastsSchema } from "./demandForecasts";
 export type { getDemandForecastsSchemaType } from "./demandForecasts";
 export { listLocationsSchema } from "./locations";

@@ -42,7 +42,7 @@ The table below shows which [Katana API](https://developer.katanamrp.com/referen
 | Purchase Order Additional Cost Row        |      |     |        |        |        |             |
 | Purchase Order Row                        |      |     |        |        |        |             |
 | Recipe                                    |      |     |        |        |        |             |
-| Sales Order                               |  x   |     |        |        |        |             |
+| Sales Order                               |  x   |  x  |   x    |   x    |   x    |             |
 | Sales Order Accounting Metadata           |      |     |        |        |        |             |
 | Sales Order Address                       |      |     |        |        |        |             |
 | Sales Order Fulfillment                   |      |     |        |        |        |             |
