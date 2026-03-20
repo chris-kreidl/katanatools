@@ -58,3 +58,15 @@ export { listInventoryMovementsSchema } from "./inventoryMovements";
 export type { listInventoryMovementsSchemaType } from "./inventoryMovements";
 export { listBomRowsSchema } from "./bomRows";
 export type { listBomRowsSchemaType } from "./bomRows";
+export {
+  listPriceListsSchema,
+  getPriceListSchema,
+  createPriceListSchema,
+  updatePriceListSchema,
+} from "./priceLists";
+export type {
+  listPriceListsSchemaType,
+  getPriceListSchemaType,
+  createPriceListSchemaType,
+  updatePriceListSchemaType,
+} from "./priceLists";

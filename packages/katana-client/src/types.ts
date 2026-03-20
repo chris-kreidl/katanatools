@@ -500,6 +500,20 @@ export interface KatanaListBomRowsResponse {
   data: Array<KatanaBomRow>;
 }
 
+export interface KatanaPriceList {
+  id: number;
+  name?: string;
+  is_active?: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface KatanaListPriceListsResponse {
+  data: Array<KatanaPriceList>;
+}
+
+export type KatanaCreatePriceListResponse = KatanaPriceList;
+
 export interface KatanaVariant {
   id: number;
   sku?: string;
