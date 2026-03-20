@@ -22,7 +22,7 @@ export const getManufacturingOrderSchema = z.object({
 export type getManufacturingOrderSchemaType = z.infer<typeof getManufacturingOrderSchema>;
 
 const batchTransactionSchema = z.object({
-  quantity: z.number().min(0).optional(),
+  quantity: z.number().optional(),
   batch_id: z.number().int().positive().optional(),
 });
 
@@ -31,8 +31,8 @@ export const createManufacturingOrderSchema = z.object({
   order_no: z.string(),
   variant_id: z.number().int().positive(),
   location_id: z.number().int().positive(),
-  planned_quantity: z.number().min(0),
-  actual_quantity: z.number().min(0).optional(),
+  planned_quantity: z.number(),
+  actual_quantity: z.number().optional(),
   order_created_date: z.string().optional(),
   production_deadline_date: z.string().optional(),
   additional_info: z.string().optional(),
@@ -47,8 +47,8 @@ export const updateManufacturingOrderSchema = z
     order_no: z.string().optional(),
     variant_id: z.number().int().positive().optional(),
     location_id: z.number().int().positive().optional(),
-    planned_quantity: z.number().min(0).optional(),
-    actual_quantity: z.number().min(0).optional(),
+    planned_quantity: z.number().optional(),
+    actual_quantity: z.number().optional(),
     order_created_date: z.string().optional(),
     production_deadline_date: z.string().optional(),
     additional_info: z.string().optional(),

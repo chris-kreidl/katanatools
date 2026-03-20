@@ -4,12 +4,12 @@ export const listVariantsSchema = z.object({
   ids: z.array(z.number().int().positive()).optional(),
   product_id: z.number().int().positive().optional(),
   material_id: z.number().int().positive().optional(),
-  sku: z.array(z.string().min(1)).optional(),
+  sku: z.array(z.string()).optional(),
   sales_price: z.number().optional(),
   purchase_price: z.number().optional(),
-  internal_barcode: z.string().min(3).max(40).optional(),
-  registered_barcode: z.string().max(120).optional(),
-  supplier_item_codes: z.array(z.string().min(1)).optional(),
+  internal_barcode: z.string().optional(),
+  registered_barcode: z.string().optional(),
+  supplier_item_codes: z.array(z.string()).optional(),
   extend: z.array(z.enum(["product_or_material"])).optional(),
   include_deleted: z.boolean().optional(),
   include_archived: z.boolean().optional(),
@@ -34,23 +34,23 @@ const configAttributeSchema = z.object({
 });
 
 const customFieldSchema = z.object({
-  field_name: z.string().max(40),
-  field_value: z.string().max(100),
+  field_name: z.string(),
+  field_value: z.string(),
 });
 
 const variantFieldsSchema = z.object({
   sku: z.string().optional(),
-  sales_price: z.number().min(0).max(100000000000).nullable().optional(),
-  purchase_price: z.number().min(0).max(100000000000).nullable().optional(),
-  product_id: z.number().int().positive().max(2147483647).optional(),
-  material_id: z.number().int().positive().max(2147483647).optional(),
-  supplier_item_codes: z.array(z.string().min(1)).min(1).optional(),
-  internal_barcode: z.string().min(3).max(40).optional(),
-  registered_barcode: z.string().max(120).optional(),
-  lead_time: z.number().int().min(0).max(999).nullable().optional(),
-  minimum_order_quantity: z.number().min(0).max(999999999).nullable().optional(),
+  sales_price: z.number().nullable().optional(),
+  purchase_price: z.number().nullable().optional(),
+  product_id: z.number().int().positive().optional(),
+  material_id: z.number().int().positive().optional(),
+  supplier_item_codes: z.array(z.string()).min(1).optional(),
+  internal_barcode: z.string().optional(),
+  registered_barcode: z.string().optional(),
+  lead_time: z.number().int().nullable().optional(),
+  minimum_order_quantity: z.number().nullable().optional(),
   config_attributes: z.array(configAttributeSchema).min(1).optional(),
-  custom_fields: z.array(customFieldSchema).max(3).optional(),
+  custom_fields: z.array(customFieldSchema).optional(),
 });
 
 export const createVariantSchema = variantFieldsSchema.refine(
