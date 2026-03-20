@@ -392,6 +392,19 @@ export interface KatanaListSalesOrdersResponse {
   data: Array<KatanaSalesOrder>;
 }
 
+export type KatanaCreateSalesOrderResponse = KatanaSalesOrder;
+
+export interface KatanaReturnableItem {
+  variant_id?: number;
+  fulfillment_row_id?: number;
+  available_for_return_quantity?: string;
+  net_price_per_unit?: string;
+  location_id?: number;
+  quantity_sold?: string;
+}
+
+export type KatanaGetReturnableItemsResponse = Array<KatanaReturnableItem>;
+
 export interface KatanaListSalesOrderRowsResponse {
   data: Array<KatanaSalesOrderRow>;
 }
