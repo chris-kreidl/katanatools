@@ -607,7 +607,7 @@ export interface KatanaBatchStock {
   location_id?: number;
   variant_id?: number;
   quantity_in_stock?: string;
-  batch_barcode?: string;
+  batch_barcode?: string | null;
 }
 
 export interface KatanaListBatchStocksResponse {
