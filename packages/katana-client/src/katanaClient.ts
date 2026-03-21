@@ -44,7 +44,7 @@ export function buildQueryParams(
         for (const v of value) query.append(key, v);
       }
     } else if (type === "boolean" || type === "number") {
-      if (value !== undefined) query.append(key, String(value));
+      if (value !== undefined) query.append(key, `${value as boolean | number}`);
     } else if (value) {
       query.append(key, value as string);
     }

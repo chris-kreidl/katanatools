@@ -31,12 +31,7 @@
     }
   },
   "scripts": {
-    "build": "rolldown -c && tsc -p tsconfig.build.json",
-    "lint": "oxlint",
-    "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run"
+    "build": "rolldown -c && tsc -p tsconfig.build.json"
   },
   "dependencies": {
     "ofetch": "^1.5.1",
@@ -44,8 +39,10 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@types/node": "^25.5.0",
     "rolldown": "^1.0.0-rc.0",
-    "vitest": "^4.0.0"
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "typescript": "^5.9.3"

@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": "./src",
-    "baseUrl": "./src"
+    "lib": ["DOM", "ES2018.AsyncGenerator"],
+    "types": ["node"]
   },
   "include": ["src/**/*.ts"]
 }

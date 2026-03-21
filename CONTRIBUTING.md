@@ -2,27 +2,22 @@
 
 ## Setup
 
+This project uses [Vite+](https://vite.dev) (`vp`) as the unified toolchain. Install it globally first, then:
+
 ```sh
 git clone https://github.com/chris-kreidl/katanatools
 cd katana
-pnpm install
+vp install
 ```
 
 ## Development
 
 ```sh
-pnpm build        # Build all packages
-pnpm test         # Run tests
-pnpm typecheck    # Type-check
-pnpm lint         # Lint
-pnpm fmt          # Format
-pnpm fmt:check    # Check formatting without writing
-```
-
-You can target a single package with `pnpm --filter <package> <script>`, e.g.:
-
-```sh
-pnpm --filter katana-client test
+vp run build          # Build all packages
+vp test           # Run tests
+vp check          # Run format, lint, and type checks
+vp lint           # Lint
+vp fmt            # Format
 ```
 
 ## Making Changes
@@ -36,13 +31,13 @@ pnpm --filter katana-client test
 2. Make your changes and ensure checks pass:
 
    ```sh
-   pnpm typecheck && pnpm lint && pnpm test && pnpm build
+   vp check && vp test && vp run build
    ```
 
 3. Add a **changeset** to describe your changes (this is how versions and changelogs are managed):
 
    ```sh
-   pnpm changeset
+   vp dlx changeset
    ```
 
    This will interactively prompt you to:
@@ -58,7 +53,7 @@ pnpm --filter katana-client test
 
 [Changesets](https://github.com/changesets/changesets) decouples "describing a change" from "releasing a version." Here's the flow:
 
-- When you open a PR, you include a changeset file (created by `pnpm changeset`). This file is a small markdown file that records which packages changed and by how much (patch/minor/major).
+- When you open a PR, you include a changeset file (created by `vp dlx changeset`). This file is a small markdown file that records which packages changed and by how much (patch/minor/major).
 - When the PR merges to `main`, the release workflow detects pending changesets and opens a **"Version Packages" PR** that bumps versions in `package.json` files and updates `CHANGELOG.md`.
 - When that Version Packages PR is merged, the release workflow publishes the new versions to npm.
 

@@ -23,20 +23,17 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "rolldown -c",
-    "lint": "oxlint",
-    "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run"
+    "build": "rolldown -c"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.25.3"
   },
   "devDependencies": {
     "@ckreidl/katana-client": "workspace:*",
+    "@types/node": "^25.5.0",
     "rolldown": "^1.0.0-rc.0",
-    "vitest": "^4.0.0"
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "typescript": "^5.9.3"

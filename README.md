@@ -70,9 +70,9 @@ The table below shows which [Katana API](https://developer.katanamrp.com/referen
 ## Getting Started
 
 ```sh
-pnpm install
-pnpm build
-pnpm test
+vp install
+vp run build
+vp test
 ```
 
 ## Contributing
