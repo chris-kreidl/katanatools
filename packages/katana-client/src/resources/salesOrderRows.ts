@@ -1,7 +1,7 @@
 import type { KatanaClient } from "../katanaClient";
 import { buildQueryParams } from "../katanaClient";
 import type { listSalesOrderRowsSchemaType } from "../schemas";
-import type { KatanaListSalesOrderRowsResponse } from "../types";
+import type { KatanaListSalesOrderRowsResponse, KatanaSalesOrderRow, WithExtend } from "../types";
 
 /**
  * Sales order rows are individual line items within a {@link SalesOrdersResource | sales order}.
@@ -24,9 +24,11 @@ export class SalesOrderRowsResource {
    * const { data } = await client.salesOrderRows.list({ sales_order_ids: [42] });
    * ```
    */
-  list = async (
-    params: listSalesOrderRowsSchemaType,
-  ): Promise<KatanaListSalesOrderRowsResponse> => {
+  list(
+    params: listSalesOrderRowsSchemaType & { extend: ["variant"] },
+  ): Promise<{ data: WithExtend<KatanaSalesOrderRow, ["variant"]>[] }>;
+  list(params: listSalesOrderRowsSchemaType): Promise<KatanaListSalesOrderRowsResponse>;
+  async list(params: listSalesOrderRowsSchemaType): Promise<KatanaListSalesOrderRowsResponse> {
     const queryParams = buildQueryParams(params, {
       ids: "numArray",
       sales_order_ids: "numArray",
@@ -50,5 +52,5 @@ export class SalesOrderRowsResource {
       {},
       queryParams,
     );
-  };
+  }
 }

@@ -1,7 +1,12 @@
 import type { KatanaClient } from "../katanaClient";
 import { buildQueryParams } from "../katanaClient";
 import type { listInventorySchemaType } from "../schemas";
-import type { KatanaListInventoryResponse } from "../types";
+import type {
+  KatanaListInventoryResponse,
+  KatanaInventoryItemWithVariant,
+  KatanaInventoryItemWithLocation,
+  KatanaInventoryItemWithVariantAndLocation,
+} from "../types";
 
 /**
  * Inventory records represent current stock levels for a variant at a specific
@@ -24,7 +29,17 @@ export class InventoryResource {
    * const { data } = await client.inventory.list({ location_id: 1 });
    * ```
    */
-  list = async (params: listInventorySchemaType): Promise<KatanaListInventoryResponse> => {
+  list(
+    params: listInventorySchemaType & { extend: ["variant", "location"] | ["location", "variant"] },
+  ): Promise<{ data: KatanaInventoryItemWithVariantAndLocation[] }>;
+  list(
+    params: listInventorySchemaType & { extend: ["variant"] },
+  ): Promise<{ data: KatanaInventoryItemWithVariant[] }>;
+  list(
+    params: listInventorySchemaType & { extend: ["location"] },
+  ): Promise<{ data: KatanaInventoryItemWithLocation[] }>;
+  list(params: listInventorySchemaType): Promise<KatanaListInventoryResponse>;
+  async list(params: listInventorySchemaType): Promise<KatanaListInventoryResponse> {
     const queryParams = buildQueryParams(params, {
       variant_id: "numArray",
       extend: "strArray",
@@ -34,5 +49,5 @@ export class InventoryResource {
       page: "string",
     });
     return this.client.request<KatanaListInventoryResponse>("GET", "inventory", {}, queryParams);
-  };
+  }
 }

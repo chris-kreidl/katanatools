@@ -1,7 +1,12 @@
 import type { KatanaClient } from "../katanaClient";
 import { buildQueryParams } from "../katanaClient";
 import type { listPurchaseOrdersSchemaType, createPurchaseOrderSchemaType } from "../schemas";
-import type { KatanaListPurchaseOrdersResponse, KatanaCreatePurchaseOrderResponse } from "../types";
+import type {
+  KatanaListPurchaseOrdersResponse,
+  KatanaCreatePurchaseOrderResponse,
+  KatanaPurchaseOrder,
+  WithExtend,
+} from "../types";
 
 /**
  * Purchase orders (POs) track orders placed with suppliers for materials or products.
@@ -22,9 +27,11 @@ export class PurchaseOrdersResource {
    * const { data } = await client.purchaseOrders.list({ status: "OPEN" });
    * ```
    */
-  list = async (
-    params: listPurchaseOrdersSchemaType,
-  ): Promise<KatanaListPurchaseOrdersResponse> => {
+  list(
+    params: listPurchaseOrdersSchemaType & { extend: ["supplier"] },
+  ): Promise<{ data: WithExtend<KatanaPurchaseOrder, ["supplier"]>[] }>;
+  list(params: listPurchaseOrdersSchemaType): Promise<KatanaListPurchaseOrdersResponse>;
+  async list(params: listPurchaseOrdersSchemaType): Promise<KatanaListPurchaseOrdersResponse> {
     const queryParams = buildQueryParams(params, {
       ids: "numArray",
       extend: "strArray",
@@ -50,7 +57,7 @@ export class PurchaseOrdersResource {
       {},
       queryParams,
     );
-  };
+  }
 
   /**
    * Creates a new purchase order. Requires at minimum a `supplier_id` and
