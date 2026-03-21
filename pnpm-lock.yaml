@@ -52,9 +52,6 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
-      '@types/node':
-        specifier: ^25.5.0
-        version: 25.5.0
       rolldown:
         specifier: ^1.0.0-rc.0
         version: 1.0.0-rc.9
@@ -77,9 +74,6 @@ importers:
       '@ckreidl/katana-client':
         specifier: workspace:*
         version: link:../katana-client
-      '@types/node':
-        specifier: ^25.5.0
-        version: 25.5.0
       rolldown:
         specifier: ^1.0.0-rc.0
         version: 1.0.0-rc.9
