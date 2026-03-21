@@ -1,5 +1,11 @@
 # @ckreidl/katana-client
 
+## 1.2.0
+
+### Minor Changes
+
+- [#30](https://github.com/chris-kreidl/katanatools/pull/30) [`3d0cfba`](https://github.com/chris-kreidl/katanatools/commit/3d0cfbaccaa6520de7a95cd64aa729db5d4d7f5f) Thanks [@chris-kreidl](https://github.com/chris-kreidl)! - Add typed `extend` parameter support with conditional return types. When callers specify `extend` values (e.g., `extend: ["supplier"]`), method overloads narrow the return type so extended fields are required instead of optional. Includes `WithExtend` utility type, pre-built type aliases, type-level tests, and `SPEC_GAPS.md` documenting undocumented API response fields.
+
 ## 1.1.0
 
 ### Minor Changes
