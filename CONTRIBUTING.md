@@ -2,7 +2,7 @@
 
 ## Setup
 
-This project uses [Vite+](https://vite.dev) (`vp`) as the unified toolchain. Install it globally first, then:
+This project uses [Vite+](https://vite.plus) (`vp`) as the unified toolchain. Install it globally first, then:
 
 ### Vite+ Installation
 
