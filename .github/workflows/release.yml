@@ -21,17 +21,15 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
 
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v6
+      - uses: voidzero-dev/setup-vp@v1
         with:
-          node-version: 24
-          cache: pnpm
+          node-version: "24"
+          cache: true
           registry-url: https://registry.npmjs.org
 
-      - run: pnpm install --frozen-lockfile
-
-      - run: pnpm build
+      - run: vp check
+      - run: vp test
+      - run: vp run build
 
       # Enable provenance for trusted publishing (OIDC)
       - run: npm config set provenance true
@@ -39,8 +37,8 @@ jobs:
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
         with:
-          publish: pnpm release
-          version: pnpm run version
+          publish: vp run release
+          version: vp run version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # No NPM_TOKEN — uses OIDC trusted publishing instead

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { KatanaClient, buildQueryParams, isRetryableStatus } from "./katanaClient";
 
 describe("isRetryableStatus", () => {

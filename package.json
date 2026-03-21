@@ -2,25 +2,19 @@
   "name": "katana",
   "private": true,
   "scripts": {
-    "build": "pnpm -r build",
-    "fmt": "pnpm -r fmt",
-    "fmt:check": "pnpm -r fmt:check",
-    "lint": "pnpm -r lint",
-    "typecheck": "pnpm -r typecheck",
-    "test": "pnpm -r test",
-    "changeset": "changeset",
-    "version": "changeset version",
-    "release": "pnpm build && changeset publish",
-    "prepare": "lefthook install"
+    "build": "vp run -r build",
+    "changeset": "vpx changeset",
+    "version": "vpx changeset version",
+    "release": "vp run build && vpx changeset publish",
+    "prepare": "vp config"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.30.0",
     "@evilmartians/lefthook": "^2.1.4",
     "@types/node": "^25.5.0",
-    "oxfmt": "^0.41.0",
-    "oxlint": "^1.43.0",
-    "tsx": "^4.0.0"
+    "tsx": "^4.0.0",
+    "vite-plus": "catalog:"
   },
   "packageManager": "pnpm@10.32.1"
 }
