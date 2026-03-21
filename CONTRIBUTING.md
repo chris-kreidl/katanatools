@@ -22,7 +22,7 @@ irm https://vite.plus/ps1 | iex
 
 ```sh
 git clone https://github.com/chris-kreidl/katanatools
-cd katana
+cd katanatools
 vp install
 ```
 
