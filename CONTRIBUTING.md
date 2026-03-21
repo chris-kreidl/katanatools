@@ -4,6 +4,22 @@
 
 This project uses [Vite+](https://vite.dev) (`vp`) as the unified toolchain. Install it globally first, then:
 
+### Vite+ Installation
+
+#### MacOS / Linux
+
+```sh
+curl -fsSL https://vite.plus | bash
+```
+
+#### Windows (PowerShell)
+
+```sh
+irm https://vite.plus/ps1 | iex
+```
+
+### Then clone the repo and install dependencies
+
 ```sh
 git clone https://github.com/chris-kreidl/katanatools
 cd katana
