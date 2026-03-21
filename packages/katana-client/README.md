@@ -38,6 +38,33 @@ for await (const page of client.paginate(client.products.list, {})) {
 }
 ```
 
+## Typed `extend` Parameter
+
+Several Katana endpoints accept an `extend` query parameter that includes related resources in the response. This client provides overloaded method signatures so TypeScript narrows the return type when you specify `extend`:
+
+```ts
+// Without extend — supplier is optional, requires null checks
+const product = await client.products.get({ id: 1 });
+product.supplier?.name; // string | undefined
+
+// With extend — supplier is guaranteed present
+const extended = await client.products.get({ id: 1, extend: ["supplier"] });
+extended.supplier.name; // string | undefined (field exists, but name is optional)
+```
+
+Supported `extend` values by resource:
+
+| Resource         | Extend Value          | Field Added           |
+| ---------------- | --------------------- | --------------------- |
+| Products         | `supplier`            | `supplier`            |
+| Materials        | `supplier`            | `supplier`            |
+| Variants         | `product_or_material` | `product_or_material` |
+| Inventory        | `variant`, `location` | `variant`, `location` |
+| Sales Order Rows | `variant`             | `variant`             |
+| Purchase Orders  | `supplier`            | `supplier`            |
+
+> **Note:** These response fields are not documented in the Katana OpenAPI spec. See [SPEC_GAPS.md](./SPEC_GAPS.md) for details.
+
 ## Configuration
 
 | Option              | Environment Variable         | Description               | Default |

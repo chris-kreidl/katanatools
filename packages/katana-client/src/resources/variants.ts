@@ -32,9 +32,11 @@ export class VariantsResource {
    * const { data } = await client.variants.list({ product_id: 42 });
    * ```
    */
+  /** When `extend: ["product_or_material"]` is specified, each variant includes a required `product_or_material` field. */
   list(
     params: listVariantsSchemaType & { extend: ["product_or_material"] },
   ): Promise<{ data: KatanaVariantWithProductOrMaterial[] }>;
+  /** Without `extend`, `product_or_material` is optional and may be undefined. */
   list(params: listVariantsSchemaType): Promise<KatanaListVariantsResponse>;
   async list(params: listVariantsSchemaType): Promise<KatanaListVariantsResponse> {
     const queryParams = buildQueryParams(params, {
@@ -69,9 +71,11 @@ export class VariantsResource {
    * const variant = await client.variants.get({ id: 100, extend: ["product"] });
    * ```
    */
+  /** When `extend: ["product_or_material"]` is specified, the returned variant includes a required `product_or_material` field. */
   get(
     params: getVariantSchemaType & { extend: ["product_or_material"] },
   ): Promise<KatanaVariantWithProductOrMaterial>;
+  /** Without `extend`, `product_or_material` is optional and may be undefined. */
   get(params: getVariantSchemaType): Promise<KatanaVariant>;
   async get(params: getVariantSchemaType): Promise<KatanaVariant> {
     const { id, ...rest } = params;

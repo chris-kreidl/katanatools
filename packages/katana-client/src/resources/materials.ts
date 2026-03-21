@@ -34,9 +34,11 @@ export class MaterialsResource {
    * const { data } = await client.materials.list({ name: "Steel Rod" });
    * ```
    */
+  /** When `extend: ["supplier"]` is specified, each material includes a required `supplier` field. */
   list(
     params: listMaterialsSchemaType & { extend: ["supplier"] },
   ): Promise<{ data: KatanaMaterialWithSupplier[] }>;
+  /** Without `extend`, `supplier` is optional and may be undefined. */
   list(params: listMaterialsSchemaType): Promise<KatanaListMaterialsResponse>;
   async list(params: listMaterialsSchemaType): Promise<KatanaListMaterialsResponse> {
     const queryParams = buildQueryParams(params, {
@@ -70,9 +72,11 @@ export class MaterialsResource {
    * const material = await client.materials.get({ id: 10, extend: ["supplier"] });
    * ```
    */
+  /** When `extend: ["supplier"]` is specified, the returned material includes a required `supplier` field. */
   get(
     params: getMaterialSchemaType & { extend: ["supplier"] },
   ): Promise<KatanaMaterialWithSupplier>;
+  /** Without `extend`, `supplier` is optional and may be undefined. */
   get(params: getMaterialSchemaType): Promise<KatanaMaterial>;
   async get(params: getMaterialSchemaType): Promise<KatanaMaterial> {
     const { id, ...rest } = params;

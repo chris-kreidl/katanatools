@@ -27,9 +27,11 @@ export class PurchaseOrdersResource {
    * const { data } = await client.purchaseOrders.list({ status: "OPEN" });
    * ```
    */
+  /** When `extend: ["supplier"]` is specified, each purchase order includes a required `supplier` field. */
   list(
     params: listPurchaseOrdersSchemaType & { extend: ["supplier"] },
   ): Promise<{ data: WithExtend<KatanaPurchaseOrder, ["supplier"]>[] }>;
+  /** Without `extend`, `supplier` is optional and may be undefined. */
   list(params: listPurchaseOrdersSchemaType): Promise<KatanaListPurchaseOrdersResponse>;
   async list(params: listPurchaseOrdersSchemaType): Promise<KatanaListPurchaseOrdersResponse> {
     const queryParams = buildQueryParams(params, {

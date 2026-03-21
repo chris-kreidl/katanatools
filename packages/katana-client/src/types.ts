@@ -646,6 +646,12 @@ export interface KatanaListVariantsResponse {
 // Extend-related utility types
 // ---------------------------------------------------------------------------
 
+/**
+ * Maps each `extend` parameter value to the type of the field it populates.
+ *
+ * @specGap These fields are returned by the API when `extend` is specified
+ * but are not documented in the Katana OpenAPI spec.
+ */
 export type ExtendableFields = {
   supplier: KatanaSupplier;
   variant: KatanaProductVariant | KatanaInventoryVariant;
@@ -653,6 +659,17 @@ export type ExtendableFields = {
   product_or_material: KatanaProduct | KatanaMaterial;
 };
 
+/**
+ * Makes the fields corresponding to `ExtendKeys` required on `Base`.
+ * Used to produce narrowed return types when callers pass an `extend` parameter.
+ *
+ * @example
+ * ```ts
+ * // Product with supplier guaranteed present
+ * type ProductWithSupplier = WithExtend<KatanaProduct, ["supplier"]>;
+ * // product.supplier is required, all other fields unchanged
+ * ```
+ */
 export type WithExtend<Base, ExtendKeys extends ReadonlyArray<keyof ExtendableFields>> = Base &
   Required<Pick<Base, ExtendKeys[number] & keyof Base>>;
 

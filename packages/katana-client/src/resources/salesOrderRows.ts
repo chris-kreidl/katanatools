@@ -24,9 +24,11 @@ export class SalesOrderRowsResource {
    * const { data } = await client.salesOrderRows.list({ sales_order_ids: [42] });
    * ```
    */
+  /** When `extend: ["variant"]` is specified, each row includes a required `variant` field. */
   list(
     params: listSalesOrderRowsSchemaType & { extend: ["variant"] },
   ): Promise<{ data: WithExtend<KatanaSalesOrderRow, ["variant"]>[] }>;
+  /** Without `extend`, `variant` is optional and may be undefined. */
   list(params: listSalesOrderRowsSchemaType): Promise<KatanaListSalesOrderRowsResponse>;
   async list(params: listSalesOrderRowsSchemaType): Promise<KatanaListSalesOrderRowsResponse> {
     const queryParams = buildQueryParams(params, {

@@ -32,9 +32,11 @@ export class ProductsResource {
    * const { data } = await client.products.list({ is_producible: true, limit: "50" });
    * ```
    */
+  /** When `extend: ["supplier"]` is specified, each product includes a required `supplier` field. */
   list(
     params: listProductsSchemaType & { extend: ["supplier"] },
   ): Promise<{ data: KatanaProductWithSupplier[] }>;
+  /** Without `extend`, `supplier` is optional and may be undefined. */
   list(params: listProductsSchemaType): Promise<KatanaListProductsResponse>;
   async list(params: listProductsSchemaType): Promise<KatanaListProductsResponse> {
     const queryParams = buildQueryParams(params, {
@@ -73,7 +75,9 @@ export class ProductsResource {
    * const product = await client.products.get({ id: 42, extend: ["variants"] });
    * ```
    */
+  /** When `extend: ["supplier"]` is specified, the returned product includes a required `supplier` field. */
   get(params: getProductSchemaType & { extend: ["supplier"] }): Promise<KatanaProductWithSupplier>;
+  /** Without `extend`, `supplier` is optional and may be undefined. */
   get(params: getProductSchemaType): Promise<KatanaProduct>;
   async get(params: getProductSchemaType): Promise<KatanaProduct> {
     const { id, ...rest } = params;
