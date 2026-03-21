@@ -9,6 +9,7 @@ import type {
 import type {
   KatanaListProductsResponse,
   KatanaProduct,
+  KatanaProductWithSupplier,
   KatanaCreateProductResponse,
 } from "../types";
 
@@ -31,7 +32,11 @@ export class ProductsResource {
    * const { data } = await client.products.list({ is_producible: true, limit: "50" });
    * ```
    */
-  list = async (params: listProductsSchemaType): Promise<KatanaListProductsResponse> => {
+  list(
+    params: listProductsSchemaType & { extend: ["supplier"] },
+  ): Promise<{ data: KatanaProductWithSupplier[] }>;
+  list(params: listProductsSchemaType): Promise<KatanaListProductsResponse>;
+  async list(params: listProductsSchemaType): Promise<KatanaListProductsResponse> {
     const queryParams = buildQueryParams(params, {
       ids: "numArray",
       extend: "strArray",
@@ -57,7 +62,7 @@ export class ProductsResource {
       updated_at_max: "string",
     });
     return this.client.request<KatanaListProductsResponse>("GET", "products", {}, queryParams);
-  };
+  }
 
   /**
    * Retrieves a single product by ID. Use the `extend` parameter to include
@@ -68,13 +73,15 @@ export class ProductsResource {
    * const product = await client.products.get({ id: 42, extend: ["variants"] });
    * ```
    */
-  get = async (params: getProductSchemaType): Promise<KatanaProduct> => {
+  get(params: getProductSchemaType & { extend: ["supplier"] }): Promise<KatanaProductWithSupplier>;
+  get(params: getProductSchemaType): Promise<KatanaProduct>;
+  async get(params: getProductSchemaType): Promise<KatanaProduct> {
     const { id, ...rest } = params;
     const queryParams = buildQueryParams(rest, {
       extend: "strArray",
     });
     return this.client.request<KatanaProduct>("GET", `products/${id}`, {}, queryParams);
-  };
+  }
 
   /**
    * Creates a new product. At minimum, `name` and `uom` (unit of measure) are required.

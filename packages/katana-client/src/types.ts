@@ -658,6 +658,8 @@ export type WithExtend<Base, ExtendKeys extends ReadonlyArray<keyof ExtendableFi
 
 export type KatanaProductWithSupplier = WithExtend<KatanaProduct, ["supplier"]>;
 
+export type KatanaMaterialWithSupplier = WithExtend<KatanaMaterial, ["supplier"]>;
+
 export type KatanaVariantWithProductOrMaterial = WithExtend<KatanaVariant, ["product_or_material"]>;
 
 export type KatanaInventoryItemWithVariant = WithExtend<KatanaInventoryItem, ["variant"]>;

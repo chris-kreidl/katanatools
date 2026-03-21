@@ -9,6 +9,7 @@ import type {
 import type {
   KatanaListVariantsResponse,
   KatanaVariant,
+  KatanaVariantWithProductOrMaterial,
   KatanaCreateVariantResponse,
 } from "../types";
 
@@ -31,7 +32,11 @@ export class VariantsResource {
    * const { data } = await client.variants.list({ product_id: 42 });
    * ```
    */
-  list = async (params: listVariantsSchemaType): Promise<KatanaListVariantsResponse> => {
+  list(
+    params: listVariantsSchemaType & { extend: ["product_or_material"] },
+  ): Promise<{ data: KatanaVariantWithProductOrMaterial[] }>;
+  list(params: listVariantsSchemaType): Promise<KatanaListVariantsResponse>;
+  async list(params: listVariantsSchemaType): Promise<KatanaListVariantsResponse> {
     const queryParams = buildQueryParams(params, {
       ids: "numArray",
       product_id: "number",
@@ -53,7 +58,7 @@ export class VariantsResource {
       updated_at_max: "string",
     });
     return this.client.request<KatanaListVariantsResponse>("GET", "variants", {}, queryParams);
-  };
+  }
 
   /**
    * Retrieves a single variant by ID. Use the `extend` parameter to include
@@ -64,13 +69,17 @@ export class VariantsResource {
    * const variant = await client.variants.get({ id: 100, extend: ["product"] });
    * ```
    */
-  get = async (params: getVariantSchemaType): Promise<KatanaVariant> => {
+  get(
+    params: getVariantSchemaType & { extend: ["product_or_material"] },
+  ): Promise<KatanaVariantWithProductOrMaterial>;
+  get(params: getVariantSchemaType): Promise<KatanaVariant>;
+  async get(params: getVariantSchemaType): Promise<KatanaVariant> {
     const { id, ...rest } = params;
     const queryParams = buildQueryParams(rest, {
       extend: "strArray",
     });
     return this.client.request<KatanaVariant>("GET", `variants/${id}`, {}, queryParams);
-  };
+  }
 
   /**
    * Creates a new variant. Must be linked to either a `product_id` or `material_id`.

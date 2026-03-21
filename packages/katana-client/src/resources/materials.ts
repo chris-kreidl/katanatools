@@ -10,6 +10,7 @@ import type {
 import type {
   KatanaListMaterialsResponse,
   KatanaMaterial,
+  KatanaMaterialWithSupplier,
   KatanaCreateMaterialResponse,
 } from "../types";
 
@@ -33,7 +34,11 @@ export class MaterialsResource {
    * const { data } = await client.materials.list({ name: "Steel Rod" });
    * ```
    */
-  list = async (params: listMaterialsSchemaType): Promise<KatanaListMaterialsResponse> => {
+  list(
+    params: listMaterialsSchemaType & { extend: ["supplier"] },
+  ): Promise<{ data: KatanaMaterialWithSupplier[] }>;
+  list(params: listMaterialsSchemaType): Promise<KatanaListMaterialsResponse>;
+  async list(params: listMaterialsSchemaType): Promise<KatanaListMaterialsResponse> {
     const queryParams = buildQueryParams(params, {
       ids: "numArray",
       extend: "strArray",
@@ -54,7 +59,7 @@ export class MaterialsResource {
       updated_at_max: "string",
     });
     return this.client.request<KatanaListMaterialsResponse>("GET", "materials", {}, queryParams);
-  };
+  }
 
   /**
    * Retrieves a single material by ID. Optionally include the default supplier
@@ -65,13 +70,17 @@ export class MaterialsResource {
    * const material = await client.materials.get({ id: 10, extend: ["supplier"] });
    * ```
    */
-  get = async (params: getMaterialSchemaType): Promise<KatanaMaterial> => {
+  get(
+    params: getMaterialSchemaType & { extend: ["supplier"] },
+  ): Promise<KatanaMaterialWithSupplier>;
+  get(params: getMaterialSchemaType): Promise<KatanaMaterial>;
+  async get(params: getMaterialSchemaType): Promise<KatanaMaterial> {
     const { id, ...rest } = params;
     const queryParams = buildQueryParams(rest, {
       extend: "strArray",
     });
     return this.client.request<KatanaMaterial>("GET", `materials/${id}`, {}, queryParams);
-  };
+  }
 
   /**
    * Creates a new material. Requires `name` and at least one entry in `variants`.
