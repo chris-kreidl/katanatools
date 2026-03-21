@@ -24,9 +24,6 @@ importers:
       '@changesets/cli':
         specifier: ^2.30.0
         version: 2.30.0(@types/node@25.5.0)
-      '@evilmartians/lefthook':
-        specifier: ^2.1.4
-        version: 2.1.4
       '@types/node':
         specifier: ^25.5.0
         version: 25.5.0
@@ -52,9 +49,6 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
-      rolldown:
-        specifier: ^1.0.0-rc.0
-        version: 1.0.0-rc.9
       vite-plus:
         specifier: 'catalog:'
         version: 0.1.13(@types/node@25.5.0)(esbuild@0.27.4)(tsx@4.21.0)(typescript@5.9.3)(vite@8.0.0(@types/node@25.5.0)(esbuild@0.27.4)(tsx@4.21.0))
@@ -74,9 +68,6 @@ importers:
       '@ckreidl/katana-client':
         specifier: workspace:*
         version: link:../katana-client
-      rolldown:
-        specifier: ^1.0.0-rc.0
-        version: 1.0.0-rc.9
       vite-plus:
         specifier: 'catalog:'
         version: 0.1.13(@types/node@25.5.0)(esbuild@0.27.4)(tsx@4.21.0)(typescript@5.9.3)(vite@8.0.0(@types/node@25.5.0)(esbuild@0.27.4)(tsx@4.21.0))
@@ -315,12 +306,6 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
-
-  '@evilmartians/lefthook@2.1.4':
-    resolution: {integrity: sha512-OxJ4JgMnGHGsHU9hGH2ge9N+PCtdBKsCpNvQ0bOrIkD+a5noGNrwB3Ms0Ab3xSxYy6QOjSa0kLJ700uAOPxuwA==}
-    cpu: [x64, arm64, ia32]
-    os: [darwin, linux, win32]
-    hasBin: true
 
   '@hono/node-server@1.19.11':
     resolution: {integrity: sha512-dr8/3zEaB+p0D2n/IUrlPF1HZm586qgJNXK1a9fhg/PzdtkK7Ksd5l312tJX2yBuALqDYBlG20QEbayqPyxn+g==}
@@ -2067,8 +2052,6 @@ snapshots:
 
   '@esbuild/win32-x64@0.27.4':
     optional: true
-
-  '@evilmartians/lefthook@2.1.4': {}
 
   '@hono/node-server@1.19.11(hono@4.12.7)':
     dependencies:
