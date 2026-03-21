@@ -9,6 +9,7 @@ import type {
 import type {
   KatanaListVariantsResponse,
   KatanaVariant,
+  KatanaVariantWithProductOrMaterial,
   KatanaCreateVariantResponse,
 } from "../types";
 
@@ -20,7 +21,12 @@ import type {
  * @see {@link https://developer.katanamrp.com/reference/list-variants | Katana API — Variants}
  */
 export class VariantsResource {
-  constructor(private client: KatanaClient) {}
+  constructor(private client: KatanaClient) {
+    this.list = this.list.bind(this);
+    this.get = this.get.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+  }
 
   /**
    * Returns a paginated list of variants, optionally filtered by product, material,
@@ -31,7 +37,13 @@ export class VariantsResource {
    * const { data } = await client.variants.list({ product_id: 42 });
    * ```
    */
-  list = async (params: listVariantsSchemaType): Promise<KatanaListVariantsResponse> => {
+  /** When `extend: ["product_or_material"]` is specified, each variant includes a required `product_or_material` field. */
+  list(
+    params: listVariantsSchemaType & { extend: ["product_or_material"] },
+  ): Promise<{ data: KatanaVariantWithProductOrMaterial[] }>;
+  /** Without `extend`, `product_or_material` is optional and may be undefined. */
+  list(params: listVariantsSchemaType): Promise<KatanaListVariantsResponse>;
+  async list(params: listVariantsSchemaType): Promise<KatanaListVariantsResponse> {
     const queryParams = buildQueryParams(params, {
       ids: "numArray",
       product_id: "number",
@@ -53,7 +65,7 @@ export class VariantsResource {
       updated_at_max: "string",
     });
     return this.client.request<KatanaListVariantsResponse>("GET", "variants", {}, queryParams);
-  };
+  }
 
   /**
    * Retrieves a single variant by ID. Use the `extend` parameter to include
@@ -61,16 +73,22 @@ export class VariantsResource {
    *
    * @example
    * ```ts
-   * const variant = await client.variants.get({ id: 100, extend: ["product"] });
+   * const variant = await client.variants.get({ id: 100, extend: ["product_or_material"] });
    * ```
    */
-  get = async (params: getVariantSchemaType): Promise<KatanaVariant> => {
+  /** When `extend: ["product_or_material"]` is specified, the returned variant includes a required `product_or_material` field. */
+  get(
+    params: getVariantSchemaType & { extend: ["product_or_material"] },
+  ): Promise<KatanaVariantWithProductOrMaterial>;
+  /** Without `extend`, `product_or_material` is optional and may be undefined. */
+  get(params: getVariantSchemaType): Promise<KatanaVariant>;
+  async get(params: getVariantSchemaType): Promise<KatanaVariant> {
     const { id, ...rest } = params;
     const queryParams = buildQueryParams(rest, {
       extend: "strArray",
     });
     return this.client.request<KatanaVariant>("GET", `variants/${id}`, {}, queryParams);
-  };
+  }
 
   /**
    * Creates a new variant. Must be linked to either a `product_id` or `material_id`.
@@ -80,11 +98,11 @@ export class VariantsResource {
    * const variant = await client.variants.create({ product_id: 42, sku: "WIDGET-LG" });
    * ```
    */
-  create = async (payload: createVariantSchemaType): Promise<KatanaCreateVariantResponse> => {
+  async create(payload: createVariantSchemaType): Promise<KatanaCreateVariantResponse> {
     return this.client.request<KatanaCreateVariantResponse>("POST", "variants", {
       body: JSON.stringify(payload),
     });
-  };
+  }
 
   /**
    * Updates the specified variant. Any parameters not provided will be left unchanged.
@@ -95,10 +113,10 @@ export class VariantsResource {
    * const variant = await client.variants.update({ id: 100, sku: "WIDGET-XL" });
    * ```
    */
-  update = async (payload: updateVariantSchemaType): Promise<KatanaVariant> => {
+  async update(payload: updateVariantSchemaType): Promise<KatanaVariant> {
     const { id, ...body } = payload;
     return this.client.request<KatanaVariant>("PATCH", `variants/${id}`, {
       body: JSON.stringify(body),
     });
-  };
+  }
 }

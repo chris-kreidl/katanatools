@@ -632,6 +632,8 @@ export interface KatanaVariant {
   created_at?: string;
   updated_at?: string;
   deleted_at?: string | null;
+  /** @specGap Katana OpenAPI spec omits this field; added for extend: ['product_or_material'] support */
+  product_or_material?: KatanaProduct | KatanaMaterial;
 }
 
 export type KatanaCreateVariantResponse = KatanaVariant;
@@ -639,3 +641,53 @@ export type KatanaCreateVariantResponse = KatanaVariant;
 export interface KatanaListVariantsResponse {
   data: Array<KatanaVariant>;
 }
+
+// ---------------------------------------------------------------------------
+// Extend-related utility types
+// ---------------------------------------------------------------------------
+
+/**
+ * Maps each `extend` parameter value to the type of the field it populates.
+ *
+ * @specGap These fields are returned by the API when `extend` is specified
+ * but are not documented in the Katana OpenAPI spec.
+ */
+export type ExtendableFields = {
+  supplier: KatanaSupplier;
+  variant: KatanaProductVariant | KatanaInventoryVariant;
+  location: KatanaLocation;
+  product_or_material: KatanaProduct | KatanaMaterial;
+};
+
+/**
+ * Makes the fields corresponding to `ExtendKeys` required on `Base`.
+ * Used to produce narrowed return types when callers pass an `extend` parameter.
+ *
+ * @example
+ * ```ts
+ * // Product with supplier guaranteed present
+ * type ProductWithSupplier = WithExtend<KatanaProduct, ["supplier"]>;
+ * // product.supplier is required, all other fields unchanged
+ * ```
+ */
+export type WithExtend<Base, ExtendKeys extends ReadonlyArray<keyof ExtendableFields>> = Base &
+  Required<Pick<Base, ExtendKeys[number] & keyof Base>>;
+
+export type KatanaProductWithSupplier = WithExtend<KatanaProduct, ["supplier"]>;
+
+export type KatanaMaterialWithSupplier = WithExtend<KatanaMaterial, ["supplier"]>;
+
+export type KatanaPurchaseOrderWithSupplier = WithExtend<KatanaPurchaseOrder, ["supplier"]>;
+
+export type KatanaSalesOrderRowWithVariant = WithExtend<KatanaSalesOrderRow, ["variant"]>;
+
+export type KatanaVariantWithProductOrMaterial = WithExtend<KatanaVariant, ["product_or_material"]>;
+
+export type KatanaInventoryItemWithVariant = WithExtend<KatanaInventoryItem, ["variant"]>;
+
+export type KatanaInventoryItemWithLocation = WithExtend<KatanaInventoryItem, ["location"]>;
+
+export type KatanaInventoryItemWithVariantAndLocation = WithExtend<
+  KatanaInventoryItem,
+  ["variant", "location"]
+>;

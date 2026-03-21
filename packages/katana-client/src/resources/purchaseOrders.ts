@@ -1,7 +1,11 @@
 import type { KatanaClient } from "../katanaClient";
 import { buildQueryParams } from "../katanaClient";
 import type { listPurchaseOrdersSchemaType, createPurchaseOrderSchemaType } from "../schemas";
-import type { KatanaListPurchaseOrdersResponse, KatanaCreatePurchaseOrderResponse } from "../types";
+import type {
+  KatanaListPurchaseOrdersResponse,
+  KatanaCreatePurchaseOrderResponse,
+  KatanaPurchaseOrderWithSupplier,
+} from "../types";
 
 /**
  * Purchase orders (POs) track orders placed with suppliers for materials or products.
@@ -11,7 +15,10 @@ import type { KatanaListPurchaseOrdersResponse, KatanaCreatePurchaseOrderRespons
  * @see {@link https://developer.katanamrp.com/reference/list-purchase-orders | Katana API — Purchase Orders}
  */
 export class PurchaseOrdersResource {
-  constructor(private client: KatanaClient) {}
+  constructor(private client: KatanaClient) {
+    this.list = this.list.bind(this);
+    this.create = this.create.bind(this);
+  }
 
   /**
    * Returns a paginated list of purchase orders, optionally filtered by order number,
@@ -22,9 +29,13 @@ export class PurchaseOrdersResource {
    * const { data } = await client.purchaseOrders.list({ status: "OPEN" });
    * ```
    */
-  list = async (
-    params: listPurchaseOrdersSchemaType,
-  ): Promise<KatanaListPurchaseOrdersResponse> => {
+  /** When `extend: ["supplier"]` is specified, each purchase order includes a required `supplier` field. */
+  list(
+    params: listPurchaseOrdersSchemaType & { extend: ["supplier"] },
+  ): Promise<{ data: KatanaPurchaseOrderWithSupplier[] }>;
+  /** Without `extend`, `supplier` is optional and may be undefined. */
+  list(params: listPurchaseOrdersSchemaType): Promise<KatanaListPurchaseOrdersResponse>;
+  async list(params: listPurchaseOrdersSchemaType): Promise<KatanaListPurchaseOrdersResponse> {
     const queryParams = buildQueryParams(params, {
       ids: "numArray",
       extend: "strArray",
@@ -50,7 +61,7 @@ export class PurchaseOrdersResource {
       {},
       queryParams,
     );
-  };
+  }
 
   /**
    * Creates a new purchase order. Requires at minimum a `supplier_id` and
@@ -65,11 +76,9 @@ export class PurchaseOrdersResource {
    * });
    * ```
    */
-  create = async (
-    payload: createPurchaseOrderSchemaType,
-  ): Promise<KatanaCreatePurchaseOrderResponse> => {
+  async create(payload: createPurchaseOrderSchemaType): Promise<KatanaCreatePurchaseOrderResponse> {
     return this.client.request<KatanaCreatePurchaseOrderResponse>("POST", "purchase_orders", {
       body: JSON.stringify(payload),
     });
-  };
+  }
 }

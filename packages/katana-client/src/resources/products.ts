@@ -9,6 +9,7 @@ import type {
 import type {
   KatanaListProductsResponse,
   KatanaProduct,
+  KatanaProductWithSupplier,
   KatanaCreateProductResponse,
 } from "../types";
 
@@ -20,7 +21,12 @@ import type {
  * @see {@link https://developer.katanamrp.com/reference/list-products | Katana API — Products}
  */
 export class ProductsResource {
-  constructor(private client: KatanaClient) {}
+  constructor(private client: KatanaClient) {
+    this.list = this.list.bind(this);
+    this.get = this.get.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+  }
 
   /**
    * Returns a paginated list of products, optionally filtered by name, type flags,
@@ -31,7 +37,13 @@ export class ProductsResource {
    * const { data } = await client.products.list({ is_producible: true, limit: "50" });
    * ```
    */
-  list = async (params: listProductsSchemaType): Promise<KatanaListProductsResponse> => {
+  /** When `extend: ["supplier"]` is specified, each product includes a required `supplier` field. */
+  list(
+    params: listProductsSchemaType & { extend: ["supplier"] },
+  ): Promise<{ data: KatanaProductWithSupplier[] }>;
+  /** Without `extend`, `supplier` is optional and may be undefined. */
+  list(params: listProductsSchemaType): Promise<KatanaListProductsResponse>;
+  async list(params: listProductsSchemaType): Promise<KatanaListProductsResponse> {
     const queryParams = buildQueryParams(params, {
       ids: "numArray",
       extend: "strArray",
@@ -57,7 +69,7 @@ export class ProductsResource {
       updated_at_max: "string",
     });
     return this.client.request<KatanaListProductsResponse>("GET", "products", {}, queryParams);
-  };
+  }
 
   /**
    * Retrieves a single product by ID. Use the `extend` parameter to include
@@ -65,16 +77,24 @@ export class ProductsResource {
    *
    * @example
    * ```ts
-   * const product = await client.products.get({ id: 42, extend: ["variants"] });
+   * const product = await client.products.get({ id: 42 });
+   *
+   * // With extend — supplier is guaranteed present
+   * const extended = await client.products.get({ id: 42, extend: ["supplier"] });
+   * console.log(extended.supplier.name);
    * ```
    */
-  get = async (params: getProductSchemaType): Promise<KatanaProduct> => {
+  /** When `extend: ["supplier"]` is specified, the returned product includes a required `supplier` field. */
+  get(params: getProductSchemaType & { extend: ["supplier"] }): Promise<KatanaProductWithSupplier>;
+  /** Without `extend`, `supplier` is optional and may be undefined. */
+  get(params: getProductSchemaType): Promise<KatanaProduct>;
+  async get(params: getProductSchemaType): Promise<KatanaProduct> {
     const { id, ...rest } = params;
     const queryParams = buildQueryParams(rest, {
       extend: "strArray",
     });
     return this.client.request<KatanaProduct>("GET", `products/${id}`, {}, queryParams);
-  };
+  }
 
   /**
    * Creates a new product. At minimum, `name` and `uom` (unit of measure) are required.
@@ -85,11 +105,11 @@ export class ProductsResource {
    * const product = await client.products.create({ name: "Widget", uom: "pcs" });
    * ```
    */
-  create = async (payload: createProductSchemaType): Promise<KatanaCreateProductResponse> => {
+  async create(payload: createProductSchemaType): Promise<KatanaCreateProductResponse> {
     return this.client.request<KatanaCreateProductResponse>("POST", "products", {
       body: JSON.stringify(payload),
     });
-  };
+  }
 
   /**
    * Updates the specified product by setting the values of the parameters passed.
@@ -100,10 +120,10 @@ export class ProductsResource {
    * const product = await client.products.update({ id: 42, name: "Updated Widget" });
    * ```
    */
-  update = async (payload: updateProductSchemaType): Promise<KatanaProduct> => {
+  async update(payload: updateProductSchemaType): Promise<KatanaProduct> {
     const { id, ...body } = payload;
     return this.client.request<KatanaProduct>("PATCH", `products/${id}`, {
       body: JSON.stringify(body),
     });
-  };
+  }
 }

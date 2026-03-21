@@ -10,6 +10,7 @@ import type {
 import type {
   KatanaListMaterialsResponse,
   KatanaMaterial,
+  KatanaMaterialWithSupplier,
   KatanaCreateMaterialResponse,
 } from "../types";
 
@@ -22,7 +23,13 @@ import type {
  * @see {@link https://developer.katanamrp.com/reference/list-materials | Katana API — Materials}
  */
 export class MaterialsResource {
-  constructor(private client: KatanaClient) {}
+  constructor(private client: KatanaClient) {
+    this.list = this.list.bind(this);
+    this.get = this.get.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
+  }
 
   /**
    * Returns a paginated list of materials, optionally filtered by name, unit of
@@ -33,7 +40,13 @@ export class MaterialsResource {
    * const { data } = await client.materials.list({ name: "Steel Rod" });
    * ```
    */
-  list = async (params: listMaterialsSchemaType): Promise<KatanaListMaterialsResponse> => {
+  /** When `extend: ["supplier"]` is specified, each material includes a required `supplier` field. */
+  list(
+    params: listMaterialsSchemaType & { extend: ["supplier"] },
+  ): Promise<{ data: KatanaMaterialWithSupplier[] }>;
+  /** Without `extend`, `supplier` is optional and may be undefined. */
+  list(params: listMaterialsSchemaType): Promise<KatanaListMaterialsResponse>;
+  async list(params: listMaterialsSchemaType): Promise<KatanaListMaterialsResponse> {
     const queryParams = buildQueryParams(params, {
       ids: "numArray",
       extend: "strArray",
@@ -54,7 +67,7 @@ export class MaterialsResource {
       updated_at_max: "string",
     });
     return this.client.request<KatanaListMaterialsResponse>("GET", "materials", {}, queryParams);
-  };
+  }
 
   /**
    * Retrieves a single material by ID. Optionally include the default supplier
@@ -65,13 +78,19 @@ export class MaterialsResource {
    * const material = await client.materials.get({ id: 10, extend: ["supplier"] });
    * ```
    */
-  get = async (params: getMaterialSchemaType): Promise<KatanaMaterial> => {
+  /** When `extend: ["supplier"]` is specified, the returned material includes a required `supplier` field. */
+  get(
+    params: getMaterialSchemaType & { extend: ["supplier"] },
+  ): Promise<KatanaMaterialWithSupplier>;
+  /** Without `extend`, `supplier` is optional and may be undefined. */
+  get(params: getMaterialSchemaType): Promise<KatanaMaterial>;
+  async get(params: getMaterialSchemaType): Promise<KatanaMaterial> {
     const { id, ...rest } = params;
     const queryParams = buildQueryParams(rest, {
       extend: "strArray",
     });
     return this.client.request<KatanaMaterial>("GET", `materials/${id}`, {}, queryParams);
-  };
+  }
 
   /**
    * Creates a new material. Requires `name` and at least one entry in `variants`.
@@ -85,11 +104,11 @@ export class MaterialsResource {
    * });
    * ```
    */
-  create = async (payload: createMaterialSchemaType): Promise<KatanaCreateMaterialResponse> => {
+  async create(payload: createMaterialSchemaType): Promise<KatanaCreateMaterialResponse> {
     return this.client.request<KatanaCreateMaterialResponse>("POST", "materials", {
       body: JSON.stringify(payload),
     });
-  };
+  }
 
   /**
    * Updates the specified material. Any parameters not provided will be left
@@ -101,12 +120,12 @@ export class MaterialsResource {
    * const material = await client.materials.update({ id: 10, name: "Updated Crystal" });
    * ```
    */
-  update = async (payload: updateMaterialSchemaType): Promise<KatanaMaterial> => {
+  async update(payload: updateMaterialSchemaType): Promise<KatanaMaterial> {
     const { id, ...body } = payload;
     return this.client.request<KatanaMaterial>("PATCH", `materials/${id}`, {
       body: JSON.stringify(body),
     });
-  };
+  }
 
   /**
    * Deletes a single material by ID. Returns no content on success.
@@ -116,8 +135,8 @@ export class MaterialsResource {
    * await client.materials.delete({ id: 10 });
    * ```
    */
-  delete = async (params: deleteMaterialSchemaType): Promise<void> => {
+  async delete(params: deleteMaterialSchemaType): Promise<void> {
     const { id } = params;
     return this.client.request<void>("DELETE", `materials/${id}`);
-  };
+  }
 }
