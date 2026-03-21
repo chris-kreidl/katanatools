@@ -16,21 +16,20 @@
     "directory": "packages/katana-mcp"
   },
   "bin": {
-    "ckreidl-katana-mcp": "./build/index.js"
+    "ckreidl-katana-mcp": "./dist/index.mjs"
   },
   "files": [
-    "build"
+    "dist"
   ],
   "type": "module",
   "scripts": {
-    "build": "rolldown -c"
+    "pack": "vp pack"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.25.3"
   },
   "devDependencies": {
     "@ckreidl/katana-client": "workspace:*",
-    "rolldown": "^1.0.0-rc.0",
     "vite-plus": "catalog:",
     "vitest": "catalog:"
   },
