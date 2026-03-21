@@ -632,6 +632,8 @@ export interface KatanaVariant {
   created_at?: string;
   updated_at?: string;
   deleted_at?: string | null;
+  /** @specGap Katana OpenAPI spec omits this field; added for extend: ['product_or_material'] support */
+  product_or_material?: KatanaProduct | KatanaMaterial;
 }
 
 export type KatanaCreateVariantResponse = KatanaVariant;
@@ -639,3 +641,30 @@ export type KatanaCreateVariantResponse = KatanaVariant;
 export interface KatanaListVariantsResponse {
   data: Array<KatanaVariant>;
 }
+
+// ---------------------------------------------------------------------------
+// Extend-related utility types
+// ---------------------------------------------------------------------------
+
+export type ExtendableFields = {
+  supplier: KatanaSupplier;
+  variant: KatanaProductVariant | KatanaInventoryVariant;
+  location: KatanaLocation;
+  product_or_material: KatanaProduct | KatanaMaterial;
+};
+
+export type WithExtend<Base, ExtendKeys extends ReadonlyArray<keyof ExtendableFields>> = Base &
+  Required<Pick<Base, ExtendKeys[number] & keyof Base>>;
+
+export type KatanaProductWithSupplier = WithExtend<KatanaProduct, ["supplier"]>;
+
+export type KatanaVariantWithProductOrMaterial = WithExtend<KatanaVariant, ["product_or_material"]>;
+
+export type KatanaInventoryItemWithVariant = WithExtend<KatanaInventoryItem, ["variant"]>;
+
+export type KatanaInventoryItemWithLocation = WithExtend<KatanaInventoryItem, ["location"]>;
+
+export type KatanaInventoryItemWithVariantAndLocation = WithExtend<
+  KatanaInventoryItem,
+  ["variant", "location"]
+>;
