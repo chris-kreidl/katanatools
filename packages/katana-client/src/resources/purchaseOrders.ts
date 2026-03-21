@@ -74,11 +74,9 @@ export class PurchaseOrdersResource {
    * });
    * ```
    */
-  create = async (
-    payload: createPurchaseOrderSchemaType,
-  ): Promise<KatanaCreatePurchaseOrderResponse> => {
+  async create(payload: createPurchaseOrderSchemaType): Promise<KatanaCreatePurchaseOrderResponse> {
     return this.client.request<KatanaCreatePurchaseOrderResponse>("POST", "purchase_orders", {
       body: JSON.stringify(payload),
     });
-  };
+  }
 }

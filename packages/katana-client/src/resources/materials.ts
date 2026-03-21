@@ -98,11 +98,11 @@ export class MaterialsResource {
    * });
    * ```
    */
-  create = async (payload: createMaterialSchemaType): Promise<KatanaCreateMaterialResponse> => {
+  async create(payload: createMaterialSchemaType): Promise<KatanaCreateMaterialResponse> {
     return this.client.request<KatanaCreateMaterialResponse>("POST", "materials", {
       body: JSON.stringify(payload),
     });
-  };
+  }
 
   /**
    * Updates the specified material. Any parameters not provided will be left
@@ -114,12 +114,12 @@ export class MaterialsResource {
    * const material = await client.materials.update({ id: 10, name: "Updated Crystal" });
    * ```
    */
-  update = async (payload: updateMaterialSchemaType): Promise<KatanaMaterial> => {
+  async update(payload: updateMaterialSchemaType): Promise<KatanaMaterial> {
     const { id, ...body } = payload;
     return this.client.request<KatanaMaterial>("PATCH", `materials/${id}`, {
       body: JSON.stringify(body),
     });
-  };
+  }
 
   /**
    * Deletes a single material by ID. Returns no content on success.
@@ -129,8 +129,8 @@ export class MaterialsResource {
    * await client.materials.delete({ id: 10 });
    * ```
    */
-  delete = async (params: deleteMaterialSchemaType): Promise<void> => {
+  async delete(params: deleteMaterialSchemaType): Promise<void> {
     const { id } = params;
     return this.client.request<void>("DELETE", `materials/${id}`);
-  };
+  }
 }

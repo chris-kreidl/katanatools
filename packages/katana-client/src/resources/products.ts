@@ -72,7 +72,11 @@ export class ProductsResource {
    *
    * @example
    * ```ts
-   * const product = await client.products.get({ id: 42, extend: ["variants"] });
+   * const product = await client.products.get({ id: 42 });
+   *
+   * // With extend — supplier is guaranteed present
+   * const extended = await client.products.get({ id: 42, extend: ["supplier"] });
+   * console.log(extended.supplier.name);
    * ```
    */
   /** When `extend: ["supplier"]` is specified, the returned product includes a required `supplier` field. */
@@ -96,11 +100,11 @@ export class ProductsResource {
    * const product = await client.products.create({ name: "Widget", uom: "pcs" });
    * ```
    */
-  create = async (payload: createProductSchemaType): Promise<KatanaCreateProductResponse> => {
+  async create(payload: createProductSchemaType): Promise<KatanaCreateProductResponse> {
     return this.client.request<KatanaCreateProductResponse>("POST", "products", {
       body: JSON.stringify(payload),
     });
-  };
+  }
 
   /**
    * Updates the specified product by setting the values of the parameters passed.
@@ -111,10 +115,10 @@ export class ProductsResource {
    * const product = await client.products.update({ id: 42, name: "Updated Widget" });
    * ```
    */
-  update = async (payload: updateProductSchemaType): Promise<KatanaProduct> => {
+  async update(payload: updateProductSchemaType): Promise<KatanaProduct> {
     const { id, ...body } = payload;
     return this.client.request<KatanaProduct>("PATCH", `products/${id}`, {
       body: JSON.stringify(body),
     });
-  };
+  }
 }

@@ -68,7 +68,7 @@ export class VariantsResource {
    *
    * @example
    * ```ts
-   * const variant = await client.variants.get({ id: 100, extend: ["product"] });
+   * const variant = await client.variants.get({ id: 100, extend: ["product_or_material"] });
    * ```
    */
   /** When `extend: ["product_or_material"]` is specified, the returned variant includes a required `product_or_material` field. */
@@ -93,11 +93,11 @@ export class VariantsResource {
    * const variant = await client.variants.create({ product_id: 42, sku: "WIDGET-LG" });
    * ```
    */
-  create = async (payload: createVariantSchemaType): Promise<KatanaCreateVariantResponse> => {
+  async create(payload: createVariantSchemaType): Promise<KatanaCreateVariantResponse> {
     return this.client.request<KatanaCreateVariantResponse>("POST", "variants", {
       body: JSON.stringify(payload),
     });
-  };
+  }
 
   /**
    * Updates the specified variant. Any parameters not provided will be left unchanged.
@@ -108,10 +108,10 @@ export class VariantsResource {
    * const variant = await client.variants.update({ id: 100, sku: "WIDGET-XL" });
    * ```
    */
-  update = async (payload: updateVariantSchemaType): Promise<KatanaVariant> => {
+  async update(payload: updateVariantSchemaType): Promise<KatanaVariant> {
     const { id, ...body } = payload;
     return this.client.request<KatanaVariant>("PATCH", `variants/${id}`, {
       body: JSON.stringify(body),
     });
-  };
+  }
 }
