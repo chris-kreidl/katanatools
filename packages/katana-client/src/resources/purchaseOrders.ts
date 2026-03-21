@@ -16,7 +16,10 @@ import type {
  * @see {@link https://developer.katanamrp.com/reference/list-purchase-orders | Katana API — Purchase Orders}
  */
 export class PurchaseOrdersResource {
-  constructor(private client: KatanaClient) {}
+  constructor(private client: KatanaClient) {
+    this.list = this.list.bind(this);
+    this.create = this.create.bind(this);
+  }
 
   /**
    * Returns a paginated list of purchase orders, optionally filtered by order number,

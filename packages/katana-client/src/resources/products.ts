@@ -21,7 +21,12 @@ import type {
  * @see {@link https://developer.katanamrp.com/reference/list-products | Katana API — Products}
  */
 export class ProductsResource {
-  constructor(private client: KatanaClient) {}
+  constructor(private client: KatanaClient) {
+    this.list = this.list.bind(this);
+    this.get = this.get.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+  }
 
   /**
    * Returns a paginated list of products, optionally filtered by name, type flags,

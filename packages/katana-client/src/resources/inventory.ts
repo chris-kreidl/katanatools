@@ -17,7 +17,9 @@ import type {
  * @see {@link https://developer.katanamrp.com/reference/list-inventory | Katana API — Inventory}
  */
 export class InventoryResource {
-  constructor(private client: KatanaClient) {}
+  constructor(private client: KatanaClient) {
+    this.list = this.list.bind(this);
+  }
 
   /**
    * Returns a paginated list of inventory records, optionally filtered by variant,

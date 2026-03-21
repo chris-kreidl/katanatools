@@ -21,7 +21,12 @@ import type {
  * @see {@link https://developer.katanamrp.com/reference/list-variants | Katana API — Variants}
  */
 export class VariantsResource {
-  constructor(private client: KatanaClient) {}
+  constructor(private client: KatanaClient) {
+    this.list = this.list.bind(this);
+    this.get = this.get.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+  }
 
   /**
    * Returns a paginated list of variants, optionally filtered by product, material,

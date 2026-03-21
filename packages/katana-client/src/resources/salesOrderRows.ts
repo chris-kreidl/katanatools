@@ -12,7 +12,9 @@ import type { KatanaListSalesOrderRowsResponse, KatanaSalesOrderRow, WithExtend 
  * @see {@link https://developer.katanamrp.com/reference/list-sales-order-rows | Katana API — Sales Order Rows}
  */
 export class SalesOrderRowsResource {
-  constructor(private client: KatanaClient) {}
+  constructor(private client: KatanaClient) {
+    this.list = this.list.bind(this);
+  }
 
   /**
    * Returns a paginated list of sales order rows, optionally filtered by parent

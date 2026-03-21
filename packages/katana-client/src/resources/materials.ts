@@ -23,7 +23,13 @@ import type {
  * @see {@link https://developer.katanamrp.com/reference/list-materials | Katana API — Materials}
  */
 export class MaterialsResource {
-  constructor(private client: KatanaClient) {}
+  constructor(private client: KatanaClient) {
+    this.list = this.list.bind(this);
+    this.get = this.get.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
+  }
 
   /**
    * Returns a paginated list of materials, optionally filtered by name, unit of
