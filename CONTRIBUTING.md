@@ -6,7 +6,7 @@ This project uses [Vite+](https://vite.plus) (`vp`) as the unified toolchain. In
 
 ### Vite+ Installation
 
-#### MacOS / Linux
+#### macOS / Linux
 
 ```sh
 curl -fsSL https://vite.plus | bash
