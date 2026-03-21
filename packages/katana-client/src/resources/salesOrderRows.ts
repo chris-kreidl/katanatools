@@ -1,7 +1,7 @@
 import type { KatanaClient } from "../katanaClient";
 import { buildQueryParams } from "../katanaClient";
 import type { listSalesOrderRowsSchemaType } from "../schemas";
-import type { KatanaListSalesOrderRowsResponse, KatanaSalesOrderRow, WithExtend } from "../types";
+import type { KatanaListSalesOrderRowsResponse, KatanaSalesOrderRowWithVariant } from "../types";
 
 /**
  * Sales order rows are individual line items within a {@link SalesOrdersResource | sales order}.
@@ -29,7 +29,7 @@ export class SalesOrderRowsResource {
   /** When `extend: ["variant"]` is specified, each row includes a required `variant` field. */
   list(
     params: listSalesOrderRowsSchemaType & { extend: ["variant"] },
-  ): Promise<{ data: WithExtend<KatanaSalesOrderRow, ["variant"]>[] }>;
+  ): Promise<{ data: KatanaSalesOrderRowWithVariant[] }>;
   /** Without `extend`, `variant` is optional and may be undefined. */
   list(params: listSalesOrderRowsSchemaType): Promise<KatanaListSalesOrderRowsResponse>;
   async list(params: listSalesOrderRowsSchemaType): Promise<KatanaListSalesOrderRowsResponse> {

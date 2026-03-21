@@ -4,8 +4,7 @@ import type { listPurchaseOrdersSchemaType, createPurchaseOrderSchemaType } from
 import type {
   KatanaListPurchaseOrdersResponse,
   KatanaCreatePurchaseOrderResponse,
-  KatanaPurchaseOrder,
-  WithExtend,
+  KatanaPurchaseOrderWithSupplier,
 } from "../types";
 
 /**
@@ -33,7 +32,7 @@ export class PurchaseOrdersResource {
   /** When `extend: ["supplier"]` is specified, each purchase order includes a required `supplier` field. */
   list(
     params: listPurchaseOrdersSchemaType & { extend: ["supplier"] },
-  ): Promise<{ data: WithExtend<KatanaPurchaseOrder, ["supplier"]>[] }>;
+  ): Promise<{ data: KatanaPurchaseOrderWithSupplier[] }>;
   /** Without `extend`, `supplier` is optional and may be undefined. */
   list(params: listPurchaseOrdersSchemaType): Promise<KatanaListPurchaseOrdersResponse>;
   async list(params: listPurchaseOrdersSchemaType): Promise<KatanaListPurchaseOrdersResponse> {
