@@ -2,10 +2,10 @@
   "name": "katana",
   "private": true,
   "scripts": {
-    "build": "pnpm -r build",
-    "changeset": "changeset",
-    "version": "changeset version",
-    "release": "vp run build && changeset publish",
+    "build": "vp run -r build",
+    "changeset": "vpx changeset",
+    "version": "vpx changeset version",
+    "release": "vp run build && vpx changeset publish",
     "prepare": "vp config"
   },
   "devDependencies": {
