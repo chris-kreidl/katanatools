@@ -1,6 +1,6 @@
 {
   "name": "@ckreidl/katana-client",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "TypeScript client for the Katana MRP API",
   "keywords": [
     "api",

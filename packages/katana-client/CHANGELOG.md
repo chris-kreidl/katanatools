@@ -1,5 +1,11 @@
 # @ckreidl/katana-client
 
+## 1.2.1
+
+### Patch Changes
+
+- [#33](https://github.com/chris-kreidl/katanatools/pull/33) [`8834d62`](https://github.com/chris-kreidl/katanatools/commit/8834d62973bf55034a99323e0f124cbffb8a3420) Thanks [@chris-kreidl](https://github.com/chris-kreidl)! - Add missing `safety_stock_level`, `default_storage_bin`, and `archived_at` fields to `KatanaInventoryItem`. Fix `quantity_potential` nullability (`string | null`).
+
 ## 1.2.0
 
 ### Minor Changes
