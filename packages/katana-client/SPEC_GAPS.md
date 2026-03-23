@@ -8,27 +8,32 @@ The Katana API supports an `extend` query parameter on several endpoints that in
 
 ### Products
 
-- **Endpoints:** [List Products](https://developer.katanamrp.com/reference/list-products), [Get Product](https://developer.katanamrp.com/reference/get-product)
+- **Endpoints:** [List Products](https://developer.katanamrp.com/reference/list-all-products), [Get Product](https://developer.katanamrp.com/reference/getproduct)
 - **Extend value:** `supplier`
 - **Missing field:** `supplier` (returns the linked `KatanaSupplier` object)
 
 ### Materials
 
-- **Endpoints:** [List Materials](https://developer.katanamrp.com/reference/list-materials), [Get Material](https://developer.katanamrp.com/reference/get-material)
+- **Endpoints:** [List Materials](https://developer.katanamrp.com/reference/getallmaterials), [Get Material](https://developer.katanamrp.com/reference/getmaterial)
 - **Extend value:** `supplier`
 - **Missing field:** `supplier` (returns the linked `KatanaSupplier` object)
 
 ### Variants
 
-- **Endpoints:** [List Variants](https://developer.katanamrp.com/reference/list-variants), [Get Variant](https://developer.katanamrp.com/reference/get-variant)
+- **Endpoints:** [List Variants](https://developer.katanamrp.com/reference/list-all-variants), [Get Variant](https://developer.katanamrp.com/reference/getvariant)
 - **Extend value:** `product_or_material`
 - **Missing field:** `product_or_material` (returns the parent `KatanaProduct` or `KatanaMaterial` object)
 
 ### Inventory
 
-- **Endpoint:** [List Inventory](https://developer.katanamrp.com/reference/list-inventory)
+- **Endpoint:** [List Inventory](https://developer.katanamrp.com/reference/list-current-inventory)
 - **Extend values:** `variant`, `location`
-- **Missing fields:** `variant` (returns `KatanaInventoryVariant`), `location` (returns `KatanaLocation`)
+- **Missing extend fields:** `variant` (returns `KatanaInventoryVariant`), `location` (returns `KatanaLocation`)
+- **Missing response fields:**
+  - `safety_stock_level` (`string`)
+  - `default_storage_bin` (`string | null`)
+  - `archived_at` (`string | null`)
+- **Incorrect nullability:** `quantity_potential` is typed as `string` in the spec but can be `null`
 
 ### Sales Order Rows
 

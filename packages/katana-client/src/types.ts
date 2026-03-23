@@ -480,13 +480,19 @@ export interface KatanaInventoryItem {
   variant_id?: number;
   location_id?: number;
   reorder_point?: string;
+  /** @specGap Katana OpenAPI spec omits this field */
+  safety_stock_level?: string;
   average_cost?: string;
   value_in_stock?: string;
   quantity_in_stock?: string;
   quantity_committed?: string;
   quantity_expected?: string;
   quantity_missing_or_excess?: string;
-  quantity_potential?: string;
+  quantity_potential?: string | null;
+  /** @specGap Katana OpenAPI spec omits this field */
+  default_storage_bin?: string | null;
+  /** @specGap Katana OpenAPI spec omits this field */
+  archived_at?: string | null;
   variant?: KatanaInventoryVariant;
   location?: KatanaLocation;
 }
